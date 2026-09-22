@@ -3,6 +3,38 @@
 All notable changes to SeasonalOverlaysLibrary are documented here.
 Versioning follows [Semantic Versioning](https://semver.org/).
 
+## [1.1.0] - 2026-09-22
+
+### Added
+- Composable presets: `leaves` now takes a `seasons` array (`spring`, `summer`,
+  `autumn`, `winter`) to pick or combine, with `leavesSpring`/`leavesSummer`/
+  `leavesAutumn`/`leavesWinter` as single-season convenience presets. New
+  `halloween` and `christmas` presets work the same way via `include`
+  (halloween: `pumpkins`/`skulls`/`ghosts`; christmas: `candyCanes`/
+  `snowballs`/`snowflakes`/`trees`/`gifts`), each defaulting to a sensible
+  combination.
+- `randomColors` option: every particle gets its own random hue instead of
+  picking from a fixed `colors` array. Works on any shape/colour-based
+  preset, including `fireworks`.
+- Matching data-attributes for all of the above: `data-overlay-colors`
+  (comma-separated), `data-overlay-random-colors`, `data-overlay-seasons`,
+  and `data-overlay-include` — no JS required for any of it.
+- The demo site now shows a "Single" / "Multi" / "Calendar" badge on every
+  preset (dots on the demo buttons, linked badges on the preset cards),
+  with a new "Preset types" section explaining what each means.
+- The default seasonal calendar now covers every month with no gaps —
+  previously several months (March, May, August, September, and parts of
+  January/February/July) had no preset configured. Halloween week
+  (Oct 25–31) now specifically resolves to `skullsghosts` instead of
+  `pumpkins`.
+
+### Fixed
+- The "leaves" and "include" option descriptions used bare slashes between
+  adjacent `<code>` chips (e.g. `leavesSpring`/`leavesSummer`/...) with no
+  space to break on, which could overflow the preset card or table cell
+  instead of wrapping. Replaced with comma/"or" separators and added
+  `overflow-wrap: break-word` as a general safeguard.
+
 ## [1.0.2] - 2026-09-22
 
 ### Changed

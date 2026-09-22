@@ -40,6 +40,13 @@
  *      data-overlay             - a custom image URL (works alone, or layered onto a preset
  *                                  to reskin its motion with your own art)
  *      data-overlay-count       - how many particles (preset has its own default)
+ *      data-overlay-colors      - comma-separated CSS colors, e.g. "#ff0000,#00ff00" (fireworks,
+ *                                  confetti, rainbows, snow, or any shape/non-emoji-glyph preset)
+ *      data-overlay-random-colors - presence alone means every particle gets its own random hue,
+ *                                  instead of picking from data-overlay-colors/the preset's colors
+ *      data-overlay-seasons     - comma-separated seasons for `leaves`, e.g. "spring,winter"
+ *      data-overlay-include     - comma-separated elements for `halloween`/`christmas`, e.g.
+ *                                  "pumpkins,skulls" or "snowflakes,trees"
  *      data-overlay-duration-ms - how long the effect runs, ms (default 2200)
  *      data-overlay-infinite    - presence alone means "run forever" (until
  *                                  SeasonalOverlaysLibrary.stop() is called, or the
@@ -57,12 +64,24 @@
  * ── Presets ──────────────────────────────────────────────────────────────
  *   snow        - small white circles, drifting straight down, no rotation
  *   snowflakes  - ❄ glyphs, slow fall with gentle rotation
- *   leaves      - 🍁🍂🍃 glyphs, wide drift and tumbling rotation
+ *   leaves      - 🍁🍂🍃 glyphs (autumn), wide drift and tumbling rotation.
+ *                 Takes a `seasons` array to pick/combine spring 🌱🍃, summer
+ *                 🌿🍃, autumn 🍁🍂🍃, or winter 🍂 — e.g. `seasons: ['spring']`.
+ *                 leavesSpring / leavesSummer / leavesAutumn / leavesWinter
+ *                 are the same preset pre-set to a single season each.
  *   confetti    - small coloured squares, fast fall, heavy rotation
  *   fireworks   - repeating radial bursts of coloured sparks (an explode-and-fade,
- *                 not a fall)
+ *                 not a fall). Takes `colors` to use your own palette, or
+ *                 `randomColors: true` for every spark to get its own random hue
+ *                 instead of picking from a fixed set
  *   pumpkins    - 🎃 glyphs, gentle fall (Halloween)
  *   skullsghosts - 💀👻 glyphs, gentle fall with tumbling rotation (Halloween)
+ *   halloween   - combines pumpkins/skulls/ghosts, picked via an `include`
+ *                 array (default: all three) — e.g. `include: ['pumpkins']`
+ *                 for just pumpkins, or `['pumpkins', 'skulls']` to skip ghosts
+ *   christmas   - candy canes 🍬, snowballs ⚪ and snowflakes ❄ by default,
+ *                 picked via the same `include` array; 'trees' 🎄 and 'gifts'
+ *                 🎁 are also available but not included by default
  *   hearts      - heart emoji, gentle fall (Valentine's)
  *   eastereggs  - 🥚🐣🐰 glyphs, gentle fall with tumbling rotation (Easter, April)
  *   rainbows    - squares in the six classic Pride-flag colours, fast fall
@@ -94,9 +113,17 @@
  *   preset       - name of a built-in preset above, or 'auto' (optional)
  *   imageUrl     - single custom icon image URL (shorthand for icons: [imageUrl])
  *   icons        - array of image URLs; each particle picks one at random
- *   content      - array of text glyphs (e.g. emoji); each particle picks one at random
+ *   content      - array of text glyphs (e.g. emoji); each particle picks one at random.
+ *                  Always wins over `seasons`/`include` below if you pass it explicitly.
+ *   seasons      - leaves only: which season(s) to combine into `content` — any of
+ *                  'spring', 'summer', 'autumn', 'winter'. Default depends on the preset.
+ *   include      - halloween/christmas only: which element(s) to combine into `content`.
+ *                  halloween: 'pumpkins' | 'skulls' | 'ghosts'. christmas: 'candyCanes' |
+ *                  'snowballs' | 'snowflakes' | 'trees' | 'gifts'. Default depends on the preset.
  *   colors       - array of CSS colors for plain-shape particles (and as the
  *                  text colour for non-emoji glyphs, e.g. ❄)
+ *   randomColors - true = every particle gets its own random hue instead of
+ *                  picking from `colors`. Overrides `colors` when both are set.
  *   shape        - 'circle' | 'square' (used when no icons/content given)
  *   behavior     - 'fall' (top-to-bottom drift, default) | 'burst' (radial
  *                  explosion, repeats) | 'fly' (flies across the screen,
@@ -137,6 +164,18 @@
     styleEl.sheet.insertRule(cssText, styleEl.sheet.cssRules.length);
   }
 
+  function randomColor() {
+    return 'hsl(' + Math.floor(rand(0, 360)) + ', 85%, 60%)';
+  }
+
+  // Picks a colour for a particle: a random hue if opts.randomColors is on
+  // (overrides opts.colors when both are set), otherwise a random pick from
+  // opts.colors, otherwise the given fallback.
+  function pickColor(opts, fallback) {
+    if (opts.randomColors) return randomColor();
+    return opts.colors && opts.colors.length ? pick(opts.colors) : fallback;
+  }
+
   // Fills in a particle's visual appearance: a custom image, a text glyph
   // (emoji etc), or a plain coloured shape — whichever the options provide.
   // Text glyphs get an explicit colour too: full-colour emoji ignore it, but
@@ -152,10 +191,10 @@
       el.style.fontSize = size + 'px';
       el.style.lineHeight = '1';
       el.style.textAlign = 'center';
-      el.style.color = opts.colors && opts.colors.length ? pick(opts.colors) : '#ffffff';
+      el.style.color = pickColor(opts, '#ffffff');
       if (opts.fontFamily) el.style.fontFamily = opts.fontFamily;
     } else {
-      el.style.backgroundColor = opts.colors && opts.colors.length ? pick(opts.colors) : '#ffffff';
+      el.style.backgroundColor = pickColor(opts, '#ffffff');
       el.style.borderRadius = opts.shape === 'square' ? '2px' : '50%';
     }
   }
@@ -327,6 +366,38 @@
     return el;
   }
 
+  // Named glyph groups that a preset can pick and combine via an option
+  // (leaves: `seasons`, halloween/christmas: `include`) instead of a fixed
+  // `content` array. resolveGroupedContent() turns the selected group names
+  // into the actual glyph list at start() time.
+  const LEAF_CONTENT_BY_SEASON = {
+    spring: ['🌱', '🍃'],
+    summer: ['🌿', '🍃'],
+    autumn: ['🍁', '🍂', '🍃'],
+    winter: ['🍂']
+  };
+  const HALLOWEEN_CONTENT_BY_ELEMENT = {
+    pumpkins: ['🎃'],
+    skulls: ['💀'],
+    ghosts: ['👻']
+  };
+  const CHRISTMAS_CONTENT_BY_ELEMENT = {
+    candyCanes: ['🍬'],
+    snowballs: ['⚪'],
+    snowflakes: ['❄', '✳', '✴'],
+    trees: ['🎄'],
+    gifts: ['🎁']
+  };
+
+  function resolveGroupedContent(groups, selected, fallback) {
+    const keys = (selected && selected.length) ? selected : fallback;
+    let out = [];
+    keys.forEach(function (k) {
+      if (groups[k]) out = out.concat(groups[k]);
+    });
+    return out;
+  }
+
   const PRESETS = {
     snow: {
       behavior: 'fall',
@@ -349,12 +420,52 @@
       rotate: true
     },
     leaves: {
+      // Which seasons' leaves to fall, e.g. seasons: ['spring', 'winter'] to
+      // combine two. Defaults to autumn (the original preset). See
+      // LEAF_CONTENT_BY_SEASON below for each season's glyphs.
       behavior: 'fall',
-      content: ['🍁', '🍂', '🍃'], // 🍁 🍂 🍃
+      seasons: ['autumn'], _contentGroup: 'leaf',
       count: 35,
       minSize: 20, maxSize: 34,
       minDuration: 6, maxDuration: 12,
       drift: 22,
+      rotate: true
+    },
+    leavesSpring: {
+      behavior: 'fall',
+      seasons: ['spring'], _contentGroup: 'leaf',
+      count: 35,
+      minSize: 18, maxSize: 30,
+      minDuration: 6, maxDuration: 12,
+      drift: 20,
+      rotate: true
+    },
+    leavesSummer: {
+      behavior: 'fall',
+      seasons: ['summer'], _contentGroup: 'leaf',
+      count: 35,
+      minSize: 20, maxSize: 32,
+      minDuration: 6, maxDuration: 12,
+      drift: 20,
+      rotate: true
+    },
+    leavesAutumn: {
+      behavior: 'fall',
+      seasons: ['autumn'], _contentGroup: 'leaf',
+      count: 35,
+      minSize: 20, maxSize: 34,
+      minDuration: 6, maxDuration: 12,
+      drift: 22,
+      rotate: true
+    },
+    leavesWinter: {
+      // Fewer, smaller, slower — the last few brown leaves still holding on.
+      behavior: 'fall',
+      seasons: ['winter'], _contentGroup: 'leaf',
+      count: 22,
+      minSize: 16, maxSize: 26,
+      minDuration: 7, maxDuration: 13,
+      drift: 14,
       rotate: true
     },
     confetti: {
@@ -396,6 +507,32 @@
       minDuration: 6, maxDuration: 12,
       drift: 16,
       rotate: true
+    },
+    halloween: {
+      // Pick any combination via include, e.g. include: ['pumpkins'] for
+      // just pumpkins, or include: ['pumpkins', 'skulls'] to leave out
+      // ghosts. Defaults to all three. See HALLOWEEN_CONTENT_BY_ELEMENT
+      // below for each element's glyphs.
+      behavior: 'fall',
+      include: ['pumpkins', 'skulls', 'ghosts'], _contentGroup: 'halloween',
+      count: 40,
+      minSize: 22, maxSize: 38,
+      minDuration: 6, maxDuration: 12,
+      drift: 14,
+      rotate: true
+    },
+    christmas: {
+      // Same idea as halloween: pick any combination via include, e.g.
+      // include: ['snowflakes'] alone, or the full default set. See
+      // CHRISTMAS_CONTENT_BY_ELEMENT below for each element's glyphs —
+      // 'trees' and 'gifts' are available too, just not included by default.
+      behavior: 'fall',
+      include: ['candyCanes', 'snowballs', 'snowflakes'], _contentGroup: 'christmas',
+      count: 45,
+      minSize: 18, maxSize: 32,
+      minDuration: 7, maxDuration: 14,
+      drift: 12,
+      rotate: false
     },
     hearts: {
       behavior: 'fall',
@@ -459,15 +596,26 @@
   // A "classic" seasonal calendar. First matching range wins. Replace this
   // array (or edit it in place) to define your own site's seasonal theme —
   // see the header comment for the shape of each entry.
+  // Every month resolves to *something* — narrower entries for a specific
+  // occasion are listed before the whole-month fallback for the rest of
+  // that month, so first-match-wins gives them priority.
   const SEASONAL_CALENDAR = [
-    { startMonth: 1, startDay: 1, endMonth: 1, endDay: 2, preset: 'fireworks' },   // New Year
-    { startMonth: 2, startDay: 1, endMonth: 2, endDay: 14, preset: 'hearts' },     // Valentine's season
-    { month: 4, preset: 'eastereggs' },                                           // Easter (April)
-    { month: 6, preset: 'rainbows' },                                             // Pride month
-    { startMonth: 7, startDay: 1, endMonth: 7, endDay: 5, preset: 'fireworks' },   // Independence Day window
-    { month: 10, preset: 'pumpkins' },                                            // Halloween / Spooktober
-    { month: 11, preset: 'leaves' },                                              // Autumn
-    { month: 12, preset: 'snow' }                                                 // Christmas / winter
+    { startMonth: 1, startDay: 1, endMonth: 1, endDay: 2, preset: 'fireworks' },      // New Year
+    { startMonth: 1, startDay: 3, endMonth: 1, endDay: 31, preset: 'snow' },          // Rest of January
+    { startMonth: 2, startDay: 1, endMonth: 2, endDay: 14, preset: 'hearts' },        // Valentine's season
+    { startMonth: 2, startDay: 15, endMonth: 2, endDay: 28, preset: 'snow' },         // Rest of February
+    { month: 3, preset: 'confetti' },                                                // March
+    { month: 4, preset: 'eastereggs' },                                              // Easter (April)
+    { month: 5, preset: 'confetti' },                                                // May
+    { month: 6, preset: 'rainbows' },                                                // Pride month
+    { startMonth: 7, startDay: 1, endMonth: 7, endDay: 5, preset: 'fireworks' },      // Independence Day window
+    { startMonth: 7, startDay: 6, endMonth: 7, endDay: 31, preset: 'confetti' },      // Rest of July
+    { month: 8, preset: 'confetti' },                                                // August
+    { month: 9, preset: 'leaves' },                                                  // Early autumn
+    { startMonth: 10, startDay: 1, endMonth: 10, endDay: 24, preset: 'pumpkins' },    // Halloween run-up
+    { startMonth: 10, startDay: 25, endMonth: 10, endDay: 31, preset: 'skullsghosts' }, // Halloween week
+    { month: 11, preset: 'leaves' },                                                 // Autumn
+    { month: 12, preset: 'snow' }                                                    // Christmas / winter
   ];
 
   // A calendar entry is either a whole month (`{ month: 4, preset: ... }`) or
@@ -496,7 +644,10 @@
     imageUrl: '',
     icons: [],
     content: [],
+    seasons: [],
+    include: [],
     colors: [],
+    randomColors: false,
     fontFamily: '',
     shape: 'circle',
     behavior: 'fall',
@@ -545,6 +696,19 @@
       // layers on top of (reskins) whatever preset motion was requested.
       if (opts.imageUrl && !options.icons) {
         opts.icons = [opts.imageUrl];
+      }
+
+      // leaves' `seasons` and halloween/christmas's `include` resolve to an
+      // actual `content` glyph array here, unless the caller already passed
+      // one explicitly (which always wins).
+      if (!options.content) {
+        if (opts._contentGroup === 'leaf') {
+          opts.content = resolveGroupedContent(LEAF_CONTENT_BY_SEASON, opts.seasons, ['autumn']);
+        } else if (opts._contentGroup === 'halloween') {
+          opts.content = resolveGroupedContent(HALLOWEEN_CONTENT_BY_ELEMENT, opts.include, ['pumpkins', 'skulls', 'ghosts']);
+        } else if (opts._contentGroup === 'christmas') {
+          opts.content = resolveGroupedContent(CHRISTMAS_CONTENT_BY_ELEMENT, opts.include, ['candyCanes', 'snowballs', 'snowflakes']);
+        }
       }
 
       styleEl = document.createElement('style');
@@ -612,6 +776,18 @@
     if (imageUrl) overrides.imageUrl = imageUrl;
     if (trigger.dataset.overlayCount) {
       overrides.count = Number(trigger.dataset.overlayCount);
+    }
+    if (trigger.dataset.overlayColors) {
+      overrides.colors = trigger.dataset.overlayColors.split(',').map(function (s) { return s.trim(); });
+    }
+    if (trigger.hasAttribute('data-overlay-random-colors')) {
+      overrides.randomColors = true;
+    }
+    if (trigger.dataset.overlaySeasons) {
+      overrides.seasons = trigger.dataset.overlaySeasons.split(',').map(function (s) { return s.trim(); });
+    }
+    if (trigger.dataset.overlayInclude) {
+      overrides.include = trigger.dataset.overlayInclude.split(',').map(function (s) { return s.trim(); });
     }
     if (trigger.hasAttribute('data-overlay-infinite')) {
       overrides.durationMs = null;

@@ -85,6 +85,7 @@
 
         .demo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; margin-bottom: 1.25rem; }
         .demo-btn {
+            position: relative;
             display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 16px 10px; border-radius: 12px;
             border: 1px solid var(--accent-border); background: var(--bg-card); color: var(--text-1); cursor: pointer;
             font-family: inherit; font-size: 0.88rem; font-weight: 600; transition: border-color 0.2s, transform 0.15s;
@@ -92,6 +93,25 @@
         .demo-btn:hover { border-color: var(--accent-border-hover); transform: translateY(-2px); }
         .demo-btn .emoji { font-size: 1.6rem; }
         .demo-btn.is-egg { border-style: dashed; opacity: 0.85; }
+        .demo-btn.type-single::after, .demo-btn.type-multi::after {
+            content: ''; position: absolute; top: 7px; right: 7px; width: 7px; height: 7px; border-radius: 50%;
+        }
+        .demo-btn.type-single::after { background: var(--text-3); }
+        .demo-btn.type-multi::after { background: var(--accent); }
+        .demo-btn.type-calendar::before {
+            content: ''; position: absolute; top: 7px; left: 7px; width: 7px; height: 7px; border-radius: 50%; background: #2ecc71;
+        }
+
+        .badge {
+            display: inline-flex; align-items: center; gap: 5px; font-size: 0.72rem; font-weight: 600;
+            padding: 3px 10px; border-radius: 100px; text-decoration: none;
+        }
+        .badge-single { background: rgba(255, 255, 255, 0.06); color: var(--text-2); border: 1px solid var(--border); }
+        .badge-multi { background: var(--accent-bg); color: var(--accent); border: 1px solid var(--accent-border); }
+        .badge-calendar { background: rgba(46, 204, 113, 0.12); color: #2ecc71; border: 1px solid rgba(46, 204, 113, 0.35); }
+        .badge:hover { opacity: 0.8; }
+        .badge-legend { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+        .badge-row { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px; }
 
         .demo-controls { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; margin-top: 1rem; }
         .demo-controls label { display: flex; align-items: center; gap: 7px; font-size: 0.9rem; color: var(--text-2); cursor: pointer; }
@@ -115,15 +135,16 @@
         .tab-panel.active { display: block; }
 
         table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
-        th, td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+        th, td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--border); vertical-align: top; overflow-wrap: break-word; }
         th { color: var(--text-3); font-weight: 600; text-transform: uppercase; font-size: 0.72rem; letter-spacing: 0.04em; }
         td { color: var(--text-2); }
         td:first-child { color: var(--text-1); font-family: monospace; white-space: nowrap; }
 
         .preset-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 10px; }
-        .preset-card { border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; background: var(--bg-card); }
+        .preset-card { border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; background: var(--bg-card); min-width: 0; overflow-wrap: break-word; }
         .preset-card b { font-family: monospace; color: var(--accent); }
-        .preset-card p { color: var(--text-2); font-size: 0.85rem; margin-top: 4px; line-height: 1.5; }
+        .preset-card p { color: var(--text-2); font-size: 0.85rem; margin-top: 4px; line-height: 1.5; overflow-wrap: break-word; }
+        .preset-card code { overflow-wrap: break-word; }
 
         footer { text-align: center; padding: 30px 6% 40px; font-size: 0.8rem; color: var(--text-3); border-top: 1px solid var(--border); margin-top: 20px; }
         footer a { color: var(--text-3); font-weight: 400; }
@@ -160,26 +181,57 @@
     <section id="demo">
         <h2>Try it</h2>
         <p class="section-sub">Every button below is wired with nothing but a <code>data-overlay-preset</code> attribute &mdash; no JS was written for this demo grid.</p>
+        <p class="section-sub badge-legend">
+            <a href="#type-single" class="badge badge-single">&#9679; Single</a>
+            <a href="#type-multi" class="badge badge-multi">&#9679; Multi</a>
+            <a href="#type-calendar" class="badge badge-calendar">&#9679; Calendar</a>
+            &mdash; see <a href="#preset-types">what these mean</a> below.
+        </p>
         <div class="demo-grid">
-            <button class="demo-btn" data-overlay-preset="snow"><span class="emoji">&#10052;&#65039;</span>snow</button>
-            <button class="demo-btn" data-overlay-preset="snowflakes"><span class="emoji">&#10052;</span>snowflakes</button>
-            <button class="demo-btn" data-overlay-preset="leaves"><span class="emoji">&#127811;</span>leaves</button>
-            <button class="demo-btn" data-overlay-preset="confetti"><span class="emoji">&#127881;</span>confetti</button>
-            <button class="demo-btn" data-overlay-preset="fireworks"><span class="emoji">&#127878;</span>fireworks</button>
-            <button class="demo-btn" data-overlay-preset="pumpkins"><span class="emoji">&#127875;</span>pumpkins</button>
-            <button class="demo-btn" data-overlay-preset="skullsghosts"><span class="emoji">&#128128;</span>skulls &amp; ghosts</button>
-            <button class="demo-btn" data-overlay-preset="hearts"><span class="emoji">&#10084;&#65039;</span>hearts</button>
-            <button class="demo-btn" data-overlay-preset="eastereggs"><span class="emoji">&#129370;</span>easter eggs</button>
-            <button class="demo-btn" data-overlay-preset="rainbows"><span class="emoji">&#127752;</span>rainbows</button>
-            <button class="demo-btn" data-overlay-preset="nyancat"><span class="emoji">&#128049;</span>nyancat</button>
-            <button class="demo-btn" data-overlay-preset="auto"><span class="emoji">&#128197;</span>auto (today)</button>
-            <button class="demo-btn is-egg" data-overlay-preset="codebug" title="Easter egg"><span class="emoji">&#128027;</span>codebug</button>
+            <button class="demo-btn type-single type-calendar" data-overlay-preset="snow"><span class="emoji">&#10052;&#65039;</span>snow</button>
+            <button class="demo-btn type-single" data-overlay-preset="snowflakes"><span class="emoji">&#10052;</span>snowflakes</button>
+            <button class="demo-btn type-single" data-overlay-preset="leavesSpring"><span class="emoji">&#127793;</span>leaves (spring)</button>
+            <button class="demo-btn type-single" data-overlay-preset="leavesSummer"><span class="emoji">&#127807;</span>leaves (summer)</button>
+            <button class="demo-btn type-single type-calendar" data-overlay-preset="leavesAutumn"><span class="emoji">&#127811;</span>leaves (autumn)</button>
+            <button class="demo-btn type-single" data-overlay-preset="leavesWinter"><span class="emoji">&#127810;</span>leaves (winter)</button>
+            <button class="demo-btn type-single type-calendar" data-overlay-preset="confetti"><span class="emoji">&#127881;</span>confetti</button>
+            <button class="demo-btn type-single type-calendar" data-overlay-preset="fireworks"><span class="emoji">&#127878;</span>fireworks</button>
+            <button class="demo-btn type-single" data-overlay-preset="fireworks" data-overlay-random-colors><span class="emoji">&#127878;</span>fireworks (random)</button>
+            <button class="demo-btn type-single type-calendar" data-overlay-preset="pumpkins"><span class="emoji">&#127875;</span>pumpkins</button>
+            <button class="demo-btn type-single type-calendar" data-overlay-preset="skullsghosts"><span class="emoji">&#128128;</span>skulls &amp; ghosts</button>
+            <button class="demo-btn type-multi" data-overlay-preset="halloween"><span class="emoji">&#127875;</span>halloween (mix)</button>
+            <button class="demo-btn type-multi" data-overlay-preset="christmas"><span class="emoji">&#127877;</span>christmas (mix)</button>
+            <button class="demo-btn type-single type-calendar" data-overlay-preset="hearts"><span class="emoji">&#10084;&#65039;</span>hearts</button>
+            <button class="demo-btn type-single type-calendar" data-overlay-preset="eastereggs"><span class="emoji">&#129370;</span>easter eggs</button>
+            <button class="demo-btn type-single type-calendar" data-overlay-preset="rainbows"><span class="emoji">&#127752;</span>rainbows</button>
+            <button class="demo-btn type-single" data-overlay-preset="nyancat"><span class="emoji">&#128049;</span>nyancat</button>
+            <button class="demo-btn type-calendar" data-overlay-preset="auto"><span class="emoji">&#128197;</span>auto (today)</button>
+            <button class="demo-btn is-egg type-single" data-overlay-preset="codebug" title="Easter egg"><span class="emoji">&#128027;</span>codebug</button>
         </div>
         <div class="demo-controls">
             <label><input type="checkbox" id="infinite-toggle" checked> Infinite mode (runs until stopped)</label>
             <button id="stop-btn" type="button">Stop</button>
         </div>
-        <p class="section-sub" style="margin-top:0.75rem;margin-bottom:0;">This page runs <code>SeasonalOverlaysLibrary.auto()</code> on load, in infinite mode &mdash; today's calendar preset, right now, running until you hit Stop or the tab is closed. (Nothing showing? There's no preset configured for today &mdash; see the calendar below.)</p>
+        <p class="section-sub" style="margin-top:0.75rem;margin-bottom:0;">This page runs <code>SeasonalOverlaysLibrary.auto()</code> on load, in infinite mode &mdash; today's calendar preset, right now, running until you hit Stop or the tab is closed. Every month has a default preset (see the calendar below), so there's almost always something falling.</p>
+    </section>
+
+    <section id="preset-types">
+        <h2>Preset types</h2>
+        <p class="section-sub">The dots on each button above, and the badges below, mark which of these apply &mdash; a preset can be more than one.</p>
+        <div class="preset-list">
+            <div class="preset-card" id="type-single">
+                <span class="badge badge-single">&#9679; Single</span>
+                <p>A preset with one fixed look &mdash; no <code>seasons</code> or <code>include</code> to pick from. Most presets are this. You can still reskin colours, size, speed, etc. via the <a href="#options">full options</a>.</p>
+            </div>
+            <div class="preset-card" id="type-multi">
+                <span class="badge badge-multi">&#9679; Multi</span>
+                <p>A composable preset built from named sub-elements you can pick and combine: <code>leaves</code> (via <code>seasons</code>) and <code>halloween</code> or <code>christmas</code> (via <code>include</code>). Leave the option out and you get a sensible default combination.</p>
+            </div>
+            <div class="preset-card" id="type-calendar">
+                <span class="badge badge-calendar">&#9679; Calendar</span>
+                <p>A preset that the <a href="#calendar">default seasonal calendar</a> resolves to for at least part of the year &mdash; what you'll get from <code>preset: 'auto'</code> on the matching date. <code>auto</code> itself is tagged here too, since it's the calendar's entry point.</p>
+            </div>
+        </div>
     </section>
 
     <section id="usage">
@@ -192,7 +244,10 @@
         </div>
         <div class="tab-panel active" id="tab-data">
 <pre><code>&lt;button data-overlay-preset="fireworks"&gt;Celebrate&lt;/button&gt;
+&lt;button data-overlay-preset="fireworks" data-overlay-random-colors&gt;Celebrate (random)&lt;/button&gt;
 &lt;button data-overlay-preset="snow" data-overlay-infinite&gt;Let it snow&lt;/button&gt;
+&lt;button data-overlay-preset="leaves" data-overlay-seasons="spring,winter"&gt;Two seasons at once&lt;/button&gt;
+&lt;button data-overlay-preset="halloween" data-overlay-include="pumpkins,skulls"&gt;No ghosts&lt;/button&gt;
 &lt;img src="/assets/tile.png" data-overlay="/assets/pumpkin.png" alt="Spooktober"&gt;
 
 &lt;script src="https://seasonaloverlayslibrary.stuxapis.net/seasonal-overlays-library.js"&gt;&lt;/script&gt;</code></pre>
@@ -222,19 +277,87 @@ SeasonalOverlaysLibrary.calendar = [
     <section id="presets">
         <h2>Presets</h2>
         <div class="preset-list">
-            <div class="preset-card"><b>snow</b><p>Small white circles, drifting straight down, no rotation.</p></div>
-            <div class="preset-card"><b>snowflakes</b><p>&#10052; glyphs, slow fall with gentle rotation.</p></div>
-            <div class="preset-card"><b>leaves</b><p>&#127809;&#127810;&#127811; glyphs, wide drift and tumbling rotation.</p></div>
-            <div class="preset-card"><b>confetti</b><p>Small coloured squares, fast fall, heavy rotation.</p></div>
-            <div class="preset-card"><b>fireworks</b><p>Repeating radial bursts of coloured sparks &mdash; an explode-and-fade, not a fall.</p></div>
-            <div class="preset-card"><b>pumpkins</b><p>&#127875; glyphs, gentle fall. Halloween.</p></div>
-            <div class="preset-card"><b>skullsghosts</b><p>&#128128;&#128123; glyphs, gentle fall with tumbling rotation. Halloween.</p></div>
-            <div class="preset-card"><b>hearts</b><p>Heart emoji, gentle fall. Valentine's.</p></div>
-            <div class="preset-card"><b>eastereggs</b><p>&#129370;&#128035;&#128048; glyphs, gentle fall with tumbling rotation. Easter (April).</p></div>
-            <div class="preset-card"><b>rainbows</b><p>Squares in the six classic Pride-flag colours, fast fall. Pride month.</p></div>
-            <div class="preset-card"><b>nyancat</b><p>A sprite (&#128049; by default) flying across the screen trailing a rainbow. Bring your own art via <code>imageUrl</code> &mdash; see the note below.</p></div>
-            <div class="preset-card"><b>codebug</b><p>Easter egg: the actual mojibake text produced during development by a missing charset header, plus a few classic bug values.</p></div>
+            <div class="preset-card">
+                <div class="badge-row"><a href="#type-single" class="badge badge-single">Single</a><a href="#type-calendar" class="badge badge-calendar">Calendar</a></div>
+                <b>snow</b><p>Small white circles, drifting straight down, no rotation.</p>
+            </div>
+            <div class="preset-card">
+                <div class="badge-row"><a href="#type-single" class="badge badge-single">Single</a></div>
+                <b>snowflakes</b><p>&#10052; glyphs, slow fall with gentle rotation.</p>
+            </div>
+            <div class="preset-card">
+                <div class="badge-row"><a href="#type-multi" class="badge badge-multi">Multi</a><a href="#type-calendar" class="badge badge-calendar">Calendar</a></div>
+                <b>leaves</b><p>&#127809;&#127810;&#127811; glyphs, wide drift and tumbling rotation. Defaults to autumn &mdash; pass <code>seasons</code> to pick/combine spring, summer, autumn, winter. <code>leavesSpring</code>, <code>leavesSummer</code>, <code>leavesAutumn</code> and <code>leavesWinter</code> are each a single season on their own (all <a href="#type-single" class="badge badge-single" style="vertical-align:2px;">Single</a>, and <code>leavesAutumn</code> also <a href="#type-calendar" class="badge badge-calendar" style="vertical-align:2px;">Calendar</a>).</p>
+            </div>
+            <div class="preset-card">
+                <div class="badge-row"><a href="#type-single" class="badge badge-single">Single</a><a href="#type-calendar" class="badge badge-calendar">Calendar</a></div>
+                <b>confetti</b><p>Small coloured squares, fast fall, heavy rotation.</p>
+            </div>
+            <div class="preset-card">
+                <div class="badge-row"><a href="#type-single" class="badge badge-single">Single</a><a href="#type-calendar" class="badge badge-calendar">Calendar</a></div>
+                <b>fireworks</b><p>Repeating radial bursts of coloured sparks &mdash; an explode-and-fade, not a fall. Pass <code>colors</code> for your own palette, or <code>randomColors: true</code> for every spark to get its own random hue.</p>
+            </div>
+            <div class="preset-card">
+                <div class="badge-row"><a href="#type-single" class="badge badge-single">Single</a><a href="#type-calendar" class="badge badge-calendar">Calendar</a></div>
+                <b>pumpkins</b><p>&#127875; glyphs, gentle fall. Halloween.</p>
+            </div>
+            <div class="preset-card">
+                <div class="badge-row"><a href="#type-single" class="badge badge-single">Single</a><a href="#type-calendar" class="badge badge-calendar">Calendar</a></div>
+                <b>skullsghosts</b><p>&#128128;&#128123; glyphs, gentle fall with tumbling rotation. Halloween.</p>
+            </div>
+            <div class="preset-card">
+                <div class="badge-row"><a href="#type-multi" class="badge badge-multi">Multi</a></div>
+                <b>halloween</b><p>Combines pumpkins/skulls/ghosts, picked via <code>include</code> (default: all three) &mdash; e.g. <code>include: ['pumpkins']</code> for just pumpkins.</p>
+            </div>
+            <div class="preset-card">
+                <div class="badge-row"><a href="#type-multi" class="badge badge-multi">Multi</a></div>
+                <b>christmas</b><p>Candy canes, snowballs and snowflakes by default, picked via <code>include</code>. <code>trees</code> &#127876; and <code>gifts</code> &#127873; are also available but opt-in.</p>
+            </div>
+            <div class="preset-card">
+                <div class="badge-row"><a href="#type-single" class="badge badge-single">Single</a><a href="#type-calendar" class="badge badge-calendar">Calendar</a></div>
+                <b>hearts</b><p>Heart emoji, gentle fall. Valentine's.</p>
+            </div>
+            <div class="preset-card">
+                <div class="badge-row"><a href="#type-single" class="badge badge-single">Single</a><a href="#type-calendar" class="badge badge-calendar">Calendar</a></div>
+                <b>eastereggs</b><p>&#129370;&#128035;&#128048; glyphs, gentle fall with tumbling rotation. Easter (April).</p>
+            </div>
+            <div class="preset-card">
+                <div class="badge-row"><a href="#type-single" class="badge badge-single">Single</a><a href="#type-calendar" class="badge badge-calendar">Calendar</a></div>
+                <b>rainbows</b><p>Squares in the six classic Pride-flag colours, fast fall. Pride month.</p>
+            </div>
+            <div class="preset-card">
+                <div class="badge-row"><a href="#type-single" class="badge badge-single">Single</a></div>
+                <b>nyancat</b><p>A sprite (&#128049; by default) flying across the screen trailing a rainbow. Bring your own art via <code>imageUrl</code> &mdash; see the note below.</p>
+            </div>
+            <div class="preset-card">
+                <div class="badge-row"><a href="#type-single" class="badge badge-single">Single</a></div>
+                <b>codebug</b><p>Easter egg: the actual mojibake text produced during development by a missing charset header, plus a few classic bug values.</p>
+            </div>
         </div>
+    </section>
+
+    <section id="calendar">
+        <h2>Default seasonal calendar</h2>
+        <p class="section-sub">What <code>preset: 'auto'</code> / <code>SeasonalOverlaysLibrary.auto()</code> resolves to, out of the box &mdash; every month has one, so there's (almost) always something. Replace <code>SeasonalOverlaysLibrary.calendar</code> to define your own.</p>
+        <table>
+            <tr><th>When</th><th>Preset</th></tr>
+            <tr><td>Jan 1&ndash;2</td><td>fireworks</td></tr>
+            <tr><td>Jan 3&ndash;31</td><td>snow</td></tr>
+            <tr><td>Feb 1&ndash;14</td><td>hearts</td></tr>
+            <tr><td>Feb 15&ndash;28</td><td>snow</td></tr>
+            <tr><td>March</td><td>confetti</td></tr>
+            <tr><td>April</td><td>eastereggs</td></tr>
+            <tr><td>May</td><td>confetti</td></tr>
+            <tr><td>June</td><td>rainbows</td></tr>
+            <tr><td>Jul 1&ndash;5</td><td>fireworks</td></tr>
+            <tr><td>Jul 6&ndash;31</td><td>confetti</td></tr>
+            <tr><td>August</td><td>confetti</td></tr>
+            <tr><td>September</td><td>leaves</td></tr>
+            <tr><td>Oct 1&ndash;24</td><td>pumpkins</td></tr>
+            <tr><td>Oct 25&ndash;31</td><td>skullsghosts</td></tr>
+            <tr><td>November</td><td>leaves</td></tr>
+            <tr><td>December</td><td>snow</td></tr>
+        </table>
     </section>
 
     <section id="options">
@@ -245,8 +368,11 @@ SeasonalOverlaysLibrary.calendar = [
             <tr><td>preset</td><td>Name of a built-in preset, or <code>'auto'</code> to resolve today's date against the calendar.</td></tr>
             <tr><td>imageUrl</td><td>Single custom icon image URL (shorthand for <code>icons: [imageUrl]</code>).</td></tr>
             <tr><td>icons</td><td>Array of image URLs; each particle picks one at random.</td></tr>
-            <tr><td>content</td><td>Array of text glyphs (e.g. emoji); each particle picks one at random.</td></tr>
+            <tr><td>content</td><td>Array of text glyphs (e.g. emoji); each particle picks one at random. Always wins over <code>seasons</code> or <code>include</code> if set explicitly.</td></tr>
+            <tr><td>seasons</td><td><code>leaves</code> only: which season(s) to combine into <code>content</code> &mdash; any of <code>spring</code>, <code>summer</code>, <code>autumn</code>, <code>winter</code>.</td></tr>
+            <tr><td>include</td><td><code>halloween</code> or <code>christmas</code> only: which element(s) to combine into <code>content</code>. halloween: <code>pumpkins</code>, <code>skulls</code>, <code>ghosts</code>. christmas: <code>candyCanes</code>, <code>snowballs</code>, <code>snowflakes</code>, <code>trees</code>, <code>gifts</code>.</td></tr>
             <tr><td>colors</td><td>CSS colors for plain-shape particles, and the text colour for non-emoji glyphs.</td></tr>
+            <tr><td>randomColors</td><td><code>true</code> = every particle gets its own random hue instead of picking from <code>colors</code>.</td></tr>
             <tr><td>shape</td><td><code>circle</code> | <code>square</code> &mdash; used when no icons/content given.</td></tr>
             <tr><td>behavior</td><td><code>fall</code> (default) | <code>burst</code> (radial explosion, repeats) | <code>fly</code> (crosses the screen, optional trail).</td></tr>
             <tr><td>count</td><td>Particles per fall batch, per firework burst, or flying sprites.</td></tr>
