@@ -3,6 +3,11 @@
 All notable changes to SeasonalOverlaysLibrary are documented here.
 Versioning follows [Semantic Versioning](https://semver.org/).
 
+## [1.2.3] - 2026-09-22
+
+### Fixed
+- The footer didn't match the convention used by real StuxAPIs products (SecretGen, Kittens): it was missing the "A StuxAPIs Service" link to `services.stuxapis.net` entirely. Fixed to the same single-line footer those products use: `© YEAR StuxAPIs — Changelog · Boring Legal Stuff · A StuxAPIs Service`, replacing the previous three separate lines (which were also inconsistent with the org's real-product convention).
+
 ## [1.2.2] - 2026-09-22
 
 ### Changed
