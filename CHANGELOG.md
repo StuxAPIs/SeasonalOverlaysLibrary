@@ -3,6 +3,11 @@
 All notable changes to SeasonalOverlaysLibrary are documented here.
 Versioning follows [Semantic Versioning](https://semver.org/).
 
+## [1.2.2] - 2026-09-22
+
+### Changed
+- Scrollbars (the page's main vertical one, and the horizontal ones on the code blocks/script-src box) now use a themed purple pill matching the accent colour, instead of the browser's default grey, in both light and dark mode.
+
 ## [1.2.1] - 2026-09-22
 
 ### Added
