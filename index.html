@@ -151,8 +151,10 @@
         </p>
         <div class="hero-links">
             <a href="https://github.com/StuxAPIs/SeasonalOverlaysLibrary" target="_blank" rel="noopener">View on GitHub</a>
-            <a href="seasonal-overlays-library.js" target="_blank" rel="noopener">Download the library</a>
+            <a href="seasonal-overlays-library.js" download target="_blank" rel="noopener">Download the library</a>
         </div>
+        <p class="section-sub" style="margin-bottom:0.4rem;">No download needed &mdash; link to it directly:</p>
+<pre style="text-align:left;max-width:640px;margin:0 auto 2.5rem;"><code>&lt;script src="https://seasonaloverlayslibrary.stuxapis.net/seasonal-overlays-library.js"&gt;&lt;/script&gt;</code></pre>
     </div>
 
     <section id="demo">
@@ -165,7 +167,9 @@
             <button class="demo-btn" data-overlay-preset="confetti"><span class="emoji">&#127881;</span>confetti</button>
             <button class="demo-btn" data-overlay-preset="fireworks"><span class="emoji">&#127878;</span>fireworks</button>
             <button class="demo-btn" data-overlay-preset="pumpkins"><span class="emoji">&#127875;</span>pumpkins</button>
+            <button class="demo-btn" data-overlay-preset="skullsghosts"><span class="emoji">&#128128;</span>skulls &amp; ghosts</button>
             <button class="demo-btn" data-overlay-preset="hearts"><span class="emoji">&#10084;&#65039;</span>hearts</button>
+            <button class="demo-btn" data-overlay-preset="eastereggs"><span class="emoji">&#129370;</span>easter eggs</button>
             <button class="demo-btn" data-overlay-preset="rainbows"><span class="emoji">&#127752;</span>rainbows</button>
             <button class="demo-btn" data-overlay-preset="nyancat"><span class="emoji">&#128049;</span>nyancat</button>
             <button class="demo-btn" data-overlay-preset="auto"><span class="emoji">&#128197;</span>auto (today)</button>
@@ -190,7 +194,7 @@
 &lt;button data-overlay-preset="snow" data-overlay-infinite&gt;Let it snow&lt;/button&gt;
 &lt;img src="/assets/tile.png" data-overlay="/assets/pumpkin.png" alt="Spooktober"&gt;
 
-&lt;script src="seasonal-overlays-library.js"&gt;&lt;/script&gt;</code></pre>
+&lt;script src="https://seasonaloverlayslibrary.stuxapis.net/seasonal-overlays-library.js"&gt;&lt;/script&gt;</code></pre>
             <p class="section-sub">Any clickable element works &mdash; an <code>&lt;img&gt;</code>, a <code>&lt;button&gt;</code>, a <code>&lt;div&gt;</code>. Click delegation means it also picks up elements added to the page later.</p>
         </div>
         <div class="tab-panel" id="tab-manual">
@@ -223,7 +227,9 @@ SeasonalOverlaysLibrary.calendar = [
             <div class="preset-card"><b>confetti</b><p>Small coloured squares, fast fall, heavy rotation.</p></div>
             <div class="preset-card"><b>fireworks</b><p>Repeating radial bursts of coloured sparks &mdash; an explode-and-fade, not a fall.</p></div>
             <div class="preset-card"><b>pumpkins</b><p>&#127875; glyphs, gentle fall. Halloween.</p></div>
+            <div class="preset-card"><b>skullsghosts</b><p>&#128128;&#128123; glyphs, gentle fall with tumbling rotation. Halloween.</p></div>
             <div class="preset-card"><b>hearts</b><p>Heart emoji, gentle fall. Valentine's.</p></div>
+            <div class="preset-card"><b>eastereggs</b><p>&#129370;&#128035;&#128048; glyphs, gentle fall with tumbling rotation. Easter (April).</p></div>
             <div class="preset-card"><b>rainbows</b><p>Squares in the six classic Pride-flag colours, fast fall. Pride month.</p></div>
             <div class="preset-card"><b>nyancat</b><p>A sprite (&#128049; by default) flying across the screen trailing a rainbow. Bring your own art via <code>imageUrl</code> &mdash; see the note below.</p></div>
             <div class="preset-card"><b>codebug</b><p>Easter egg: the actual mojibake text produced during development by a missing charset header, plus a few classic bug values.</p></div>

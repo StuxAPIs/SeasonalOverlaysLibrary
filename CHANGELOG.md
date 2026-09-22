@@ -3,6 +3,33 @@
 All notable changes to SeasonalOverlaysLibrary are documented here.
 Versioning follows [Semantic Versioning](https://semver.org/).
 
+## [1.0.1] - 2026-09-22
+
+### Added
+- A directly linkable, no-download-needed `<script>` URL
+  (`https://seasonaloverlayslibrary.stuxapis.net/seasonal-overlays-library.js`)
+  now shown on the demo site and used in the README/docs usage snippets,
+  instead of implying a local download is required.
+- `burstsPerTick` option: how many simultaneous firework burst origins spawn
+  per tick (burst behavior only, default 1).
+- Two new presets: `skullsghosts` (💀👻, Halloween) and `eastereggs` (🥚🐣🐰, Easter).
+- Calendar entries can now be a whole month via `{ month: 4, preset: '...' }`,
+  instead of always having to spell out `startMonth`/`startDay`/`endMonth`/`endDay`.
+  The default `SeasonalOverlaysLibrary.calendar` now uses this shorthand for
+  Pride month, Halloween, Autumn, and Christmas, and adds Easter (all of April)
+  mapped to `eastereggs`.
+
+### Fixed
+- The `snowflakes` preset's ❅/❆ glyphs (U+2745/U+2746) aren't reliably
+  supported by common fonts and could render as tofu/garbled boxes depending
+  on the host's font stack. Replaced with ❄/✳/✴ (U+2744/U+2733/U+2734), which
+  are broadly supported.
+
+### Changed
+- The `fireworks` preset is noticeably bigger and busier: 48 particles per
+  burst (was 32), 3 simultaneous burst origins per tick, and ticks every
+  450ms instead of 900ms.
+
 ## [1.0.0] - 2026-09-22
 
 ### Added

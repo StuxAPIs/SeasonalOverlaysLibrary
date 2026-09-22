@@ -44,7 +44,7 @@ a handful of extra behaviors and built-in presets on top.
 <button data-overlay-preset="snow" data-overlay-infinite>Let it snow</button>
 <button data-overlay-preset="auto">Surprise me (today's calendar preset)</button>
 
-<script src="seasonal-overlays-library.js"></script>
+<script src="https://seasonaloverlayslibrary.stuxapis.net/seasonal-overlays-library.js"></script>
 ```
 
 Or drive it from your own JavaScript:

@@ -62,7 +62,9 @@
  *   fireworks   - repeating radial bursts of coloured sparks (an explode-and-fade,
  *                 not a fall)
  *   pumpkins    - 🎃 glyphs, gentle fall (Halloween)
+ *   skullsghosts - 💀👻 glyphs, gentle fall with tumbling rotation (Halloween)
  *   hearts      - heart emoji, gentle fall (Valentine's)
+ *   eastereggs  - 🥚🐣🐰 glyphs, gentle fall with tumbling rotation (Easter, April)
  *   rainbows    - squares in the six classic Pride-flag colours, fast fall
  *                 (Pride month)
  *   nyancat     - a sprite (🐱 by default) flying across the screen trailing
@@ -74,9 +76,13 @@
 
  * ── Seasonal calendar / auto mode ───────────────────────────────────────
  * `SeasonalOverlaysLibrary.calendar` is a plain array of date ranges mapped
- * to a preset name, checked in order, first match wins:
+ * to a preset name, checked in order, first match wins. An entry is either
+ * a whole month (the common case) or an explicit day range for anything
+ * narrower than a full month:
  *
- *   [{ startMonth: 6, startDay: 1, endMonth: 6, endDay: 30, preset: 'rainbows' }, ...]
+ *   [{ month: 6, preset: 'rainbows' },                                     // all of June
+ *    { startMonth: 2, startDay: 1, endMonth: 2, endDay: 14, preset: 'hearts' }, // Feb 1-14 only
+ *    ...]
  *
  * Replace or edit this array to define your own site's seasonal theme.
  * `SeasonalOverlaysLibrary.auto(options)` resolves today's date against it and
@@ -100,7 +106,8 @@
  *   minDuration/maxDuration - seconds per particle (fall/fly), or per burst (burst)
  *   drift        - max horizontal drift in vw over the fall (fall behavior only)
  *   rotate       - whether particles spin as they fall (fall behavior only)
- *   burstIntervalMs - gap between fireworks bursts (burst behavior only, default 900ms)
+ *   burstIntervalMs - gap between fireworks ticks (burst behavior only, default 900ms)
+ *   burstsPerTick - simultaneous burst origins spawned per tick (burst behavior only, default 1)
  *   trail        - whether a fly particle leaves a fading trail (fly behavior only)
  *   trailColors  - CSS colors cycled through for the trail (fly behavior only)
  *   zIndex       - stacking order (default 9999)
@@ -230,10 +237,13 @@
 
   function spawnFireworkBurst(opts) {
     if (!container) return;
-    const originX = rand(window.innerWidth * 0.15, window.innerWidth * 0.85);
-    const originY = rand(window.innerHeight * 0.15, window.innerHeight * 0.55);
-    for (let i = 0; i < opts.count; i++) {
-      container.appendChild(createBurstParticle(opts, originX, originY));
+    const bursts = opts.burstsPerTick || 1;
+    for (let b = 0; b < bursts; b++) {
+      const originX = rand(window.innerWidth * 0.1, window.innerWidth * 0.9);
+      const originY = rand(window.innerHeight * 0.12, window.innerHeight * 0.55);
+      for (let i = 0; i < opts.count; i++) {
+        container.appendChild(createBurstParticle(opts, originX, originY));
+      }
     }
   }
 
@@ -361,12 +371,13 @@
       behavior: 'burst',
       colors: ['#ff4d4f', '#ffd400', '#36c5f0', '#2ecc71', '#ff8a00', '#ff4dd2'],
       shape: 'circle',
-      count: 32,
-      minSize: 4, maxSize: 8,
-      minDuration: 1, maxDuration: 1.6,
-      minDistance: 80, maxDistance: 240,
+      count: 48,
+      minSize: 4, maxSize: 9,
+      minDuration: 1, maxDuration: 1.8,
+      minDistance: 90, maxDistance: 280,
       gravity: 60,
-      burstIntervalMs: 900
+      burstsPerTick: 3,
+      burstIntervalMs: 450
     },
     pumpkins: {
       behavior: 'fall',
@@ -377,6 +388,15 @@
       drift: 12,
       rotate: false
     },
+    skullsghosts: {
+      behavior: 'fall',
+      content: ['💀', '👻'], // 💀 👻
+      count: 36,
+      minSize: 22, maxSize: 38,
+      minDuration: 6, maxDuration: 12,
+      drift: 16,
+      rotate: true
+    },
     hearts: {
       behavior: 'fall',
       content: ['❤️', '💕', '💖'], // ❤️ 💕 💖
@@ -385,6 +405,15 @@
       minDuration: 6, maxDuration: 11,
       drift: 14,
       rotate: false
+    },
+    eastereggs: {
+      behavior: 'fall',
+      content: ['🥚', '🐣', '🐰'], // 🥚 🐣 🐰
+      count: 32,
+      minSize: 22, maxSize: 34,
+      minDuration: 6, maxDuration: 11,
+      drift: 14,
+      rotate: true
     },
     rainbows: {
       // Classic six-stripe Pride flag palette.
@@ -433,13 +462,17 @@
   const SEASONAL_CALENDAR = [
     { startMonth: 1, startDay: 1, endMonth: 1, endDay: 2, preset: 'fireworks' },   // New Year
     { startMonth: 2, startDay: 1, endMonth: 2, endDay: 14, preset: 'hearts' },     // Valentine's season
-    { startMonth: 6, startDay: 1, endMonth: 6, endDay: 30, preset: 'rainbows' },   // Pride month
+    { month: 4, preset: 'eastereggs' },                                           // Easter (April)
+    { month: 6, preset: 'rainbows' },                                             // Pride month
     { startMonth: 7, startDay: 1, endMonth: 7, endDay: 5, preset: 'fireworks' },   // Independence Day window
-    { startMonth: 10, startDay: 1, endMonth: 10, endDay: 31, preset: 'pumpkins' }, // Halloween / Spooktober
-    { startMonth: 11, startDay: 1, endMonth: 11, endDay: 30, preset: 'leaves' },   // Autumn
-    { startMonth: 12, startDay: 1, endMonth: 12, endDay: 31, preset: 'snow' }      // Christmas / winter
+    { month: 10, preset: 'pumpkins' },                                            // Halloween / Spooktober
+    { month: 11, preset: 'leaves' },                                              // Autumn
+    { month: 12, preset: 'snow' }                                                 // Christmas / winter
   ];
 
+  // A calendar entry is either a whole month (`{ month: 4, preset: ... }`) or
+  // an explicit day range within/across months (`{ startMonth, startDay,
+  // endMonth, endDay, preset }`) for anything narrower than a full month.
   function resolveAutoPreset(date, calendar) {
     date = date || new Date();
     const list = calendar || SEASONAL_CALENDAR;
@@ -447,8 +480,12 @@
     const t = date.getTime();
     for (let i = 0; i < list.length; i++) {
       const entry = list[i];
-      const start = new Date(year, entry.startMonth - 1, entry.startDay, 0, 0, 0, 0).getTime();
-      const end = new Date(year, entry.endMonth - 1, entry.endDay, 23, 59, 59, 999).getTime();
+      const startMonth = entry.month || entry.startMonth;
+      const endMonth = entry.month || entry.endMonth;
+      const startDay = entry.month ? 1 : entry.startDay;
+      const endDay = entry.month ? new Date(year, endMonth, 0).getDate() : entry.endDay;
+      const start = new Date(year, startMonth - 1, startDay, 0, 0, 0, 0).getTime();
+      const end = new Date(year, endMonth - 1, endDay, 23, 59, 59, 999).getTime();
       if (t >= start && t <= end) return entry.preset;
     }
     return null;
@@ -470,6 +507,7 @@
     rotate: false,
     minDistance: 80, maxDistance: 240,
     gravity: 60,
+    burstsPerTick: 1,
     burstIntervalMs: 900,
     trail: false,
     trailColors: [],
