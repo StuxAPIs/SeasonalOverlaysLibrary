@@ -3,6 +3,14 @@
 All notable changes to SeasonalOverlaysLibrary are documented here.
 Versioning follows [Semantic Versioning](https://semver.org/).
 
+## [1.0.2] - 2026-09-22
+
+### Changed
+- The demo site now runs `SeasonalOverlaysLibrary.auto()` in infinite mode on
+  load, so it showcases today's calendar preset live rather than waiting for
+  a click. The "Infinite mode" checkbox now defaults to checked as well, so
+  clicking any demo button afterward keeps running until Stop is pressed.
+
 ## [1.0.1] - 2026-09-22
 
 ### Added

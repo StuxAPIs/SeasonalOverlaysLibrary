@@ -176,9 +176,10 @@
             <button class="demo-btn is-egg" data-overlay-preset="codebug" title="Easter egg"><span class="emoji">&#128027;</span>codebug</button>
         </div>
         <div class="demo-controls">
-            <label><input type="checkbox" id="infinite-toggle"> Infinite mode (runs until stopped)</label>
+            <label><input type="checkbox" id="infinite-toggle" checked> Infinite mode (runs until stopped)</label>
             <button id="stop-btn" type="button">Stop</button>
         </div>
+        <p class="section-sub" style="margin-top:0.75rem;margin-bottom:0;">This page runs <code>SeasonalOverlaysLibrary.auto()</code> on load, in infinite mode &mdash; today's calendar preset, right now, running until you hit Stop or the tab is closed. (Nothing showing? There's no preset configured for today &mdash; see the calendar below.)</p>
     </section>
 
     <section id="usage">
@@ -328,7 +329,7 @@ SeasonalOverlaysLibrary.calendar = [
     (function () {
         var infiniteToggle = document.getElementById('infinite-toggle');
         var demoButtons = document.querySelectorAll('.demo-btn');
-        infiniteToggle.addEventListener('change', function () {
+        function syncInfiniteAttr() {
             demoButtons.forEach(function (b) {
                 if (infiniteToggle.checked) {
                     b.setAttribute('data-overlay-infinite', '');
@@ -336,11 +337,17 @@ SeasonalOverlaysLibrary.calendar = [
                     b.removeAttribute('data-overlay-infinite');
                 }
             });
-        });
+        }
+        syncInfiniteAttr(); // apply the checkbox's default (checked) state on load
+        infiniteToggle.addEventListener('change', syncInfiniteAttr);
 
         document.getElementById('stop-btn').addEventListener('click', function () {
             SeasonalOverlaysLibrary.stop();
         });
+
+        // Showcase the calendar/auto feature by running it live on this page,
+        // in infinite mode, as soon as it loads.
+        SeasonalOverlaysLibrary.auto({ durationMs: null });
 
         var tabButtons = document.querySelectorAll('.tab-btn');
         tabButtons.forEach(function (t) {
