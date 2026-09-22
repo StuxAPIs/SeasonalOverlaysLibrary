@@ -3,6 +3,14 @@
 All notable changes to SeasonalOverlaysLibrary are documented here.
 Versioning follows [Semantic Versioning](https://semver.org/).
 
+## [1.2.1] - 2026-09-22
+
+### Added
+- Open Graph and Twitter card meta tags on the demo site (`og:type`,
+  `og:site_name`, `og:title`, `og:description`, `og:url`, `og:image` +
+  dimensions/alt, and the matching `twitter:*` set), so links shared on
+  social media get a proper preview instead of a bare title.
+
 ## [1.2.0] - 2026-09-22
 
 ### Added
