@@ -3,6 +3,21 @@
 All notable changes to SeasonalOverlaysLibrary are documented here.
 Versioning follows [Semantic Versioning](https://semver.org/).
 
+## [1.2.0] - 2026-09-22
+
+### Added
+- `random` preset: `preset: 'random'` (or `data-overlay-preset="random"`)
+  picks a random built-in preset (never `codebug`, which stays an
+  intentional easter egg) and jitters its `count`/`minSize`/`maxSize`/
+  `minDuration`/`maxDuration`, occasionally swapping in `randomColors` too
+  — a different result most times you trigger it. Anything you pass
+  alongside it explicitly (e.g. `count: 100`) is left alone, not jittered.
+- Demo site: a "random" button and preset card, placed last in the demo
+  grid. Added a fourth badge category, "Special" (its own colour and dot),
+  covering `random` and `codebug` — presets that don't fit Single/Multi/
+  Calendar since they aren't a fixed look and are never picked by `auto`
+  or by `random` itself.
+
 ## [1.1.0] - 2026-09-22
 
 ### Added

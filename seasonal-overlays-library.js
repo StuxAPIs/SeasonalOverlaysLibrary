@@ -91,7 +91,12 @@
  *   codebug     - easter egg: the actual mojibake text produced during this
  *                 library's development by a missing charset header, plus a
  *                 few classic bug values, falling in red monospace
+ *   random      - preset: 'random' picks a random preset (never codebug) and
+ *                 jitters its count/size/duration, occasionally swapping in
+ *                 randomColors too — a different surprise most times you use it.
+ *                 Anything you pass alongside it (e.g. count) is left alone.
  *
+
 
  * ── Seasonal calendar / auto mode ───────────────────────────────────────
  * `SeasonalOverlaysLibrary.calendar` is a plain array of date ranges mapped
@@ -593,6 +598,36 @@
     }
   };
 
+  // Presets eligible for preset: 'random' — everything except codebug
+  // (an easter egg, not meant to surface unannounced) and random itself.
+  const RANDOM_PRESET_POOL = Object.keys(PRESETS).filter(function (name) {
+    return name !== 'codebug';
+  });
+
+  // Jitters a numeric option by a random factor so a random preset doesn't
+  // always come out looking identical to its own fixed defaults.
+  function jitter(value, min) {
+    return Math.max(min, Math.round(value * rand(0.6, 1.7)));
+  }
+
+  // Jitters opts in place, but never overrides a value the caller explicitly
+  // passed in `overrides` (SeasonalOverlaysLibrary.start()'s own options
+  // argument) — random only fills in what wasn't asked for specifically.
+  function randomizeValues(opts, overrides) {
+    if (overrides.count === undefined) opts.count = jitter(opts.count, 4);
+    if (overrides.minSize === undefined) opts.minSize = jitter(opts.minSize, 4);
+    if (overrides.maxSize === undefined) opts.maxSize = Math.max(opts.minSize + 2, jitter(opts.maxSize, opts.minSize + 2));
+    if (overrides.minDuration === undefined) opts.minDuration = Math.max(0.5, opts.minDuration * rand(0.7, 1.5));
+    if (overrides.maxDuration === undefined) opts.maxDuration = Math.max(opts.minDuration + 0.3, opts.maxDuration * rand(0.7, 1.5));
+    // About a third of the time, and only for presets that use plain-colour
+    // shapes/glyphs (not images or fixed emoji), go full random-hue instead
+    // of the preset's own palette.
+    if (overrides.randomColors === undefined && opts.colors && opts.colors.length && Math.random() < 0.35) {
+      opts.randomColors = true;
+    }
+    return opts;
+  }
+
   // A "classic" seasonal calendar. First matching range wins. Replace this
   // array (or edit it in place) to define your own site's seasonal theme —
   // see the header comment for the shape of each entry.
@@ -676,6 +711,7 @@
 
       options = Object.assign({}, options);
       let presetName = options.preset;
+      const wasRandom = presetName === 'random';
 
       if (presetName === 'auto') {
         presetName = this.resolveAutoPreset(new Date());
@@ -683,6 +719,8 @@
           console.info('SeasonalOverlaysLibrary.start: no seasonal preset configured for today');
           return;
         }
+      } else if (wasRandom) {
+        presetName = pick(RANDOM_PRESET_POOL);
       }
 
       const preset = presetName ? PRESETS[presetName] : null;
@@ -691,6 +729,10 @@
       }
 
       const opts = Object.assign({}, DEFAULTS, preset || {}, options);
+      if (wasRandom) {
+        opts.preset = presetName; // reflect the preset actually picked, not the literal 'random'
+        randomizeValues(opts, options);
+      }
 
       // Shorthand: a single imageUrl becomes a one-item icons array, and
       // layers on top of (reskins) whatever preset motion was requested.

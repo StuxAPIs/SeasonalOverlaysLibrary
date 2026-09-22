@@ -93,11 +93,12 @@
         .demo-btn:hover { border-color: var(--accent-border-hover); transform: translateY(-2px); }
         .demo-btn .emoji { font-size: 1.6rem; }
         .demo-btn.is-egg { border-style: dashed; opacity: 0.85; }
-        .demo-btn.type-single::after, .demo-btn.type-multi::after {
+        .demo-btn.type-single::after, .demo-btn.type-multi::after, .demo-btn.type-special::after {
             content: ''; position: absolute; top: 7px; right: 7px; width: 7px; height: 7px; border-radius: 50%;
         }
         .demo-btn.type-single::after { background: var(--text-3); }
         .demo-btn.type-multi::after { background: var(--accent); }
+        .demo-btn.type-special::after { background: #f5a623; }
         .demo-btn.type-calendar::before {
             content: ''; position: absolute; top: 7px; left: 7px; width: 7px; height: 7px; border-radius: 50%; background: #2ecc71;
         }
@@ -109,6 +110,7 @@
         .badge-single { background: rgba(255, 255, 255, 0.06); color: var(--text-2); border: 1px solid var(--border); }
         .badge-multi { background: var(--accent-bg); color: var(--accent); border: 1px solid var(--accent-border); }
         .badge-calendar { background: rgba(46, 204, 113, 0.12); color: #2ecc71; border: 1px solid rgba(46, 204, 113, 0.35); }
+        .badge-special { background: rgba(245, 166, 35, 0.12); color: #f5a623; border: 1px solid rgba(245, 166, 35, 0.35); }
         .badge:hover { opacity: 0.8; }
         .badge-legend { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
         .badge-row { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px; }
@@ -185,6 +187,7 @@
             <a href="#type-single" class="badge badge-single">&#9679; Single</a>
             <a href="#type-multi" class="badge badge-multi">&#9679; Multi</a>
             <a href="#type-calendar" class="badge badge-calendar">&#9679; Calendar</a>
+            <a href="#type-special" class="badge badge-special">&#9679; Special</a>
             &mdash; see <a href="#preset-types">what these mean</a> below.
         </p>
         <div class="demo-grid">
@@ -206,7 +209,8 @@
             <button class="demo-btn type-single type-calendar" data-overlay-preset="rainbows"><span class="emoji">&#127752;</span>rainbows</button>
             <button class="demo-btn type-single" data-overlay-preset="nyancat"><span class="emoji">&#128049;</span>nyancat</button>
             <button class="demo-btn type-calendar" data-overlay-preset="auto"><span class="emoji">&#128197;</span>auto (today)</button>
-            <button class="demo-btn is-egg type-single" data-overlay-preset="codebug" title="Easter egg"><span class="emoji">&#128027;</span>codebug</button>
+            <button class="demo-btn is-egg type-special" data-overlay-preset="codebug" title="Easter egg"><span class="emoji">&#128027;</span>codebug</button>
+            <button class="demo-btn type-special" data-overlay-preset="random"><span class="emoji">&#127922;</span>random</button>
         </div>
         <div class="demo-controls">
             <label><input type="checkbox" id="infinite-toggle" checked> Infinite mode (runs until stopped)</label>
@@ -230,6 +234,10 @@
             <div class="preset-card" id="type-calendar">
                 <span class="badge badge-calendar">&#9679; Calendar</span>
                 <p>A preset that the <a href="#calendar">default seasonal calendar</a> resolves to for at least part of the year &mdash; what you'll get from <code>preset: 'auto'</code> on the matching date. <code>auto</code> itself is tagged here too, since it's the calendar's entry point.</p>
+            </div>
+            <div class="preset-card" id="type-special">
+                <span class="badge badge-special">&#9679; Special</span>
+                <p>Doesn't fit Single/Multi/Calendar: <code>random</code> isn't a look of its own &mdash; it picks a random preset and jitters its values each time. <code>codebug</code> is a deliberate easter egg, not a real theme. Both are opt-in only, never picked by <code>auto</code> or <code>random</code> itself.</p>
             </div>
         </div>
     </section>
@@ -257,6 +265,7 @@
 <pre><code>SeasonalOverlaysLibrary.start({ preset: 'leaves' });
 SeasonalOverlaysLibrary.start({ preset: 'snow', durationMs: null }); // infinite
 SeasonalOverlaysLibrary.start({ imageUrl: '/assets/pumpkin.png' });  // fully custom, no preset
+SeasonalOverlaysLibrary.start({ preset: 'random' });                 // a surprise every time
 SeasonalOverlaysLibrary.stop();                                     // stop an infinite run</code></pre>
         </div>
         <div class="tab-panel" id="tab-calendar">
@@ -330,8 +339,12 @@ SeasonalOverlaysLibrary.calendar = [
                 <b>nyancat</b><p>A sprite (&#128049; by default) flying across the screen trailing a rainbow. Bring your own art via <code>imageUrl</code> &mdash; see the note below.</p>
             </div>
             <div class="preset-card">
-                <div class="badge-row"><a href="#type-single" class="badge badge-single">Single</a></div>
+                <div class="badge-row"><a href="#type-special" class="badge badge-special">Special</a></div>
                 <b>codebug</b><p>Easter egg: the actual mojibake text produced during development by a missing charset header, plus a few classic bug values.</p>
+            </div>
+            <div class="preset-card">
+                <div class="badge-row"><a href="#type-special" class="badge badge-special">Special</a></div>
+                <b>random</b><p>Picks a random preset (never <code>codebug</code>) and jitters its count/size/duration, occasionally swapping in <code>randomColors</code> too. Every trigger can land on a Single, Multi, or Calendar preset.</p>
             </div>
         </div>
     </section>
