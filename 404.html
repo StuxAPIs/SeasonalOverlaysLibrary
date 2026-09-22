@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="https://global.media.stuxapis.net/icon.png">
+    <meta name="description" content="Page not found — StuxAPIs">
+    <title>Page Not Found — StuxAPIs</title>
+    <link rel="stylesheet" href="assets/fonts/fonts.css">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --bg: #121214; --text-1: #f2f2f5; --text-2: rgba(242, 242, 245, 0.6);
+            --accent: #BF7FF9; --accent-bg: rgba(191, 127, 249, 0.12); --accent-border: rgba(191, 127, 249, 0.3); --accent-border-hover: rgba(191, 127, 249, 0.5);
+        }
+        @media (prefers-color-scheme: light) {
+            :root {
+                --bg: #f7f4fb; --text-1: #17121c; --text-2: rgba(23, 18, 28, 0.6);
+                --accent: #7a1fd6; --accent-bg: rgba(122, 31, 214, 0.08); --accent-border: rgba(122, 31, 214, 0.25); --accent-border-hover: rgba(122, 31, 214, 0.45);
+            }
+        }
+        :root.theme-light {
+            --bg: #f7f4fb; --text-1: #17121c; --text-2: rgba(23, 18, 28, 0.6);
+            --accent: #7a1fd6; --accent-bg: rgba(122, 31, 214, 0.08); --accent-border: rgba(122, 31, 214, 0.25); --accent-border-hover: rgba(122, 31, 214, 0.45);
+        }
+        :root.theme-dark {
+            --bg: #121214; --text-1: #f2f2f5; --text-2: rgba(242, 242, 245, 0.6);
+            --accent: #BF7FF9; --accent-bg: rgba(191, 127, 249, 0.12); --accent-border: rgba(191, 127, 249, 0.3); --accent-border-hover: rgba(191, 127, 249, 0.5);
+        }
+
+        html, body {
+            background: var(--bg); color: var(--text-1); font-family: 'Fredoka', -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; transition: background 0.3s, color 0.3s;
+        }
+
+        a, a:visited { color: var(--accent); text-decoration: none; }
+        a:hover, a:focus { opacity: 0.8; }
+
+        .wrapper { padding: 2rem 1.5rem; max-width: 420px; }
+        .code { font-weight: 700; font-size: clamp(3.5rem, 12vw, 5.5rem); line-height: 1; color: var(--accent); margin-bottom: 0.5rem; }
+        h1 { font-weight: 700; font-size: clamp(1.3rem, 4vw, 1.7rem); margin-bottom: 0.75rem; }
+        p { color: var(--text-2); font-size: 0.95rem; line-height: 1.7; margin-bottom: 1.75rem; }
+
+        .home-link {
+            display: inline-flex; align-items: center; gap: 8px; padding: 11px 20px; border-radius: 10px;
+            font-size: 14px; font-weight: 500; border: 1px solid var(--accent-border); background: var(--accent-bg); transition: background 0.2s, border-color 0.2s;
+        }
+        .home-link:hover { border-color: var(--accent-border-hover); opacity: 1; }
+
+        #theme-toggle {
+            position: fixed; top: 14px; right: 14px; z-index: 100; background: var(--accent-bg); border: 1px solid var(--accent-border);
+            border-radius: 50%; width: 38px; height: 38px; font-size: 17px; line-height: 38px; text-align: center; cursor: pointer;
+            padding: 0; color: var(--accent); transition: background 0.2s, border-color 0.2s;
+        }
+        #theme-toggle:hover { border-color: var(--accent-border-hover); }
+    </style>
+</head>
+<body>
+    <button id="theme-toggle" title="Toggle light/dark mode" aria-label="Toggle light/dark mode">&#9788;</button>
+
+    <div class="wrapper">
+        <div class="code">404</div>
+        <h1>Page not found</h1>
+        <p>Whatever you were looking for isn't here &mdash; the link might be old, or the page might have moved.</p>
+        <a class="home-link" href="./">&larr; Back to StuxAPIs</a>
+    </div>
+
+    <script>
+        (function () {
+            var root = document.documentElement;
+            var btn = document.getElementById('theme-toggle');
+            var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            var stored = localStorage.getItem('stuxapis-theme');
+            var isDark = stored ? stored === 'dark' : prefersDark;
+
+            function apply(dark) {
+                root.classList.toggle('theme-dark', dark);
+                root.classList.toggle('theme-light', !dark);
+                btn.textContent = dark ? '☀' : '☾';
+                btn.title = dark ? 'Switch to light mode' : 'Switch to dark mode';
+            }
+
+            apply(isDark);
+
+            btn.addEventListener('click', function () {
+                isDark = !isDark;
+                localStorage.setItem('stuxapis-theme', isDark ? 'dark' : 'light');
+                apply(isDark);
+            });
+        })();
+    </script>
+</body>
+</html>
