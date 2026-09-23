@@ -73,7 +73,7 @@
         a, a:visited { color: var(--accent); text-decoration: none; }
         a:hover, a:focus { opacity: 0.8; }
 
-        .site-header { display: flex; align-items: center; justify-content: space-between; padding: 18px 6%; }
+        .site-header { position: relative; z-index: 10000; background: var(--bg); display: flex; align-items: center; justify-content: space-between; padding: 18px 6%; }
         .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.1rem; color: var(--text-1); }
         .brand img { height: 32px; width: auto; }
         #theme-toggle {
@@ -173,7 +173,7 @@
         .preset-card p { color: var(--text-2); font-size: 0.85rem; margin-top: 4px; line-height: 1.5; overflow-wrap: break-word; }
         .preset-card code { overflow-wrap: break-word; }
 
-        footer { text-align: center; padding: 30px 6% 40px; font-size: 0.8rem; color: var(--text-3); border-top: 1px solid var(--border); margin-top: 20px; }
+        footer { position: relative; z-index: 10000; background: var(--bg); text-align: center; padding: 30px 6% 40px; font-size: 0.8rem; color: var(--text-3); border-top: 1px solid var(--border); margin-top: 20px; }
         footer a { color: var(--text-3); font-weight: 400; }
         footer a:hover { opacity: 0.8; }
         footer p { margin: 4px 0; }
@@ -218,20 +218,21 @@
         <div class="demo-grid">
             <button class="demo-btn type-single type-calendar" data-overlay-preset="snow"><span class="emoji">&#10052;&#65039;</span>snow</button>
             <button class="demo-btn type-single" data-overlay-preset="snowflakes"><span class="emoji">&#10052;</span>snowflakes</button>
-            <button class="demo-btn type-single" data-overlay-preset="leavesSpring"><span class="emoji">&#127793;</span>leaves (spring)</button>
-            <button class="demo-btn type-single" data-overlay-preset="leavesSummer"><span class="emoji">&#127807;</span>leaves (summer)</button>
+            <button class="demo-btn type-single type-calendar" data-overlay-preset="leavesSpring"><span class="emoji">&#127793;</span>leaves (spring)</button>
+            <button class="demo-btn type-single type-calendar" data-overlay-preset="leavesSummer"><span class="emoji">&#127807;</span>leaves (summer)</button>
             <button class="demo-btn type-single type-calendar" data-overlay-preset="leavesAutumn"><span class="emoji">&#127811;</span>leaves (autumn)</button>
-            <button class="demo-btn type-single" data-overlay-preset="leavesWinter"><span class="emoji">&#127810;</span>leaves (winter)</button>
+            <button class="demo-btn type-single type-calendar" data-overlay-preset="leavesWinter"><span class="emoji">&#127810;</span>leaves (winter)</button>
             <button class="demo-btn type-single type-calendar" data-overlay-preset="confetti"><span class="emoji">&#127881;</span>confetti</button>
             <button class="demo-btn type-single type-calendar" data-overlay-preset="fireworks"><span class="emoji">&#127878;</span>fireworks</button>
             <button class="demo-btn type-single" data-overlay-preset="fireworks" data-overlay-random-colors><span class="emoji">&#127878;</span>fireworks (random)</button>
             <button class="demo-btn type-single type-calendar" data-overlay-preset="pumpkins"><span class="emoji">&#127875;</span>pumpkins</button>
             <button class="demo-btn type-single type-calendar" data-overlay-preset="skullsghosts"><span class="emoji">&#128128;</span>skulls &amp; ghosts</button>
             <button class="demo-btn type-multi" data-overlay-preset="halloween"><span class="emoji">&#127875;</span>halloween (mix)</button>
-            <button class="demo-btn type-multi" data-overlay-preset="christmas"><span class="emoji">&#127877;</span>christmas (mix)</button>
+            <button class="demo-btn type-multi type-calendar" data-overlay-preset="christmas"><span class="emoji">&#127877;</span>christmas (mix)</button>
             <button class="demo-btn type-single type-calendar" data-overlay-preset="hearts"><span class="emoji">&#10084;&#65039;</span>hearts</button>
             <button class="demo-btn type-single type-calendar" data-overlay-preset="eastereggs"><span class="emoji">&#129370;</span>easter eggs</button>
             <button class="demo-btn type-single type-calendar" data-overlay-preset="rainbows"><span class="emoji">&#127752;</span>rainbows</button>
+            <button class="demo-btn type-multi type-calendar" data-overlay-preset="sunny"><span class="emoji">&#9728;&#65039;</span>sunny</button>
             <button class="demo-btn type-single" data-overlay-preset="nyancat"><span class="emoji">&#128049;</span>nyancat</button>
             <button class="demo-btn type-calendar" data-overlay-preset="auto"><span class="emoji">&#128197;</span>auto (today)</button>
             <button class="demo-btn is-egg type-special" data-overlay-preset="codebug" title="Easter egg"><span class="emoji">&#128027;</span>codebug</button>
@@ -321,7 +322,7 @@ SeasonalOverlaysLibrary.calendar = [
             </div>
             <div class="preset-card">
                 <div class="badge-row"><a href="#type-multi" class="badge badge-multi">Multi</a><a href="#type-calendar" class="badge badge-calendar">Calendar</a></div>
-                <b>leaves</b><p>&#127809;&#127810;&#127811; glyphs, wide drift and tumbling rotation. Defaults to autumn &mdash; pass <code>seasons</code> to pick/combine spring, summer, autumn, winter. <code>leavesSpring</code>, <code>leavesSummer</code>, <code>leavesAutumn</code> and <code>leavesWinter</code> are each a single season on their own (all <a href="#type-single" class="badge badge-single" style="vertical-align:2px;">Single</a>, and <code>leavesAutumn</code> also <a href="#type-calendar" class="badge badge-calendar" style="vertical-align:2px;">Calendar</a>).</p>
+                <b>leaves</b><p>&#127809;&#127810;&#127811; glyphs, wide drift and tumbling rotation. Defaults to autumn &mdash; pass <code>seasons</code> to pick/combine spring, summer, autumn, winter. <code>leavesSpring</code>, <code>leavesSummer</code>, <code>leavesAutumn</code> and <code>leavesWinter</code> are each a single season on their own, and each has its own slice of the <a href="#calendar">default calendar</a> (all <a href="#type-single" class="badge badge-single" style="vertical-align:2px;">Single</a> and <a href="#type-calendar" class="badge badge-calendar" style="vertical-align:2px;">Calendar</a>).</p>
             </div>
             <div class="preset-card">
                 <div class="badge-row"><a href="#type-single" class="badge badge-single">Single</a><a href="#type-calendar" class="badge badge-calendar">Calendar</a></div>
@@ -344,7 +345,7 @@ SeasonalOverlaysLibrary.calendar = [
                 <b>halloween</b><p>Combines pumpkins/skulls/ghosts, picked via <code>include</code> (default: all three) &mdash; e.g. <code>include: ['pumpkins']</code> for just pumpkins.</p>
             </div>
             <div class="preset-card">
-                <div class="badge-row"><a href="#type-multi" class="badge badge-multi">Multi</a></div>
+                <div class="badge-row"><a href="#type-multi" class="badge badge-multi">Multi</a><a href="#type-calendar" class="badge badge-calendar">Calendar</a></div>
                 <b>christmas</b><p>Candy canes, snowballs and snowflakes by default, picked via <code>include</code>. <code>trees</code> &#127876; and <code>gifts</code> &#127873; are also available but opt-in.</p>
             </div>
             <div class="preset-card">
@@ -358,6 +359,10 @@ SeasonalOverlaysLibrary.calendar = [
             <div class="preset-card">
                 <div class="badge-row"><a href="#type-single" class="badge badge-single">Single</a><a href="#type-calendar" class="badge badge-calendar">Calendar</a></div>
                 <b>rainbows</b><p>Squares in the six classic Pride-flag colours, fast fall. Pride month.</p>
+            </div>
+            <div class="preset-card">
+                <div class="badge-row"><a href="#type-multi" class="badge badge-multi">Multi</a><a href="#type-calendar" class="badge badge-calendar">Calendar</a></div>
+                <b>sunny</b><p>&#9728;&#65039;&#127774;&#127803; glyphs, gentle fall with tumbling rotation. Combines sun/sunFace/sunflower by default, picked via <code>include</code>. August.</p>
             </div>
             <div class="preset-card">
                 <div class="badge-row"><a href="#type-single" class="badge badge-single">Single</a></div>
@@ -380,21 +385,23 @@ SeasonalOverlaysLibrary.calendar = [
         <table>
             <tr><th>When</th><th>Preset</th></tr>
             <tr><td>Jan 1&ndash;2</td><td>fireworks</td></tr>
-            <tr><td>Jan 3&ndash;31</td><td>snow</td></tr>
+            <tr><td>Jan 3&ndash;31</td><td>leavesWinter</td></tr>
             <tr><td>Feb 1&ndash;14</td><td>hearts</td></tr>
-            <tr><td>Feb 15&ndash;28</td><td>snow</td></tr>
-            <tr><td>March</td><td>confetti</td></tr>
+            <tr><td>Feb 15&ndash;28</td><td>leavesWinter</td></tr>
+            <tr><td>March</td><td>leavesSpring</td></tr>
             <tr><td>April</td><td>eastereggs</td></tr>
-            <tr><td>May</td><td>confetti</td></tr>
+            <tr><td>May</td><td>leavesSpring</td></tr>
             <tr><td>June</td><td>rainbows</td></tr>
             <tr><td>Jul 1&ndash;5</td><td>fireworks</td></tr>
-            <tr><td>Jul 6&ndash;31</td><td>confetti</td></tr>
-            <tr><td>August</td><td>confetti</td></tr>
-            <tr><td>September</td><td>leaves</td></tr>
+            <tr><td>Jul 6&ndash;31</td><td>leavesSummer</td></tr>
+            <tr><td>August</td><td>sunny</td></tr>
+            <tr><td>September</td><td>leavesAutumn</td></tr>
             <tr><td>Oct 1&ndash;24</td><td>pumpkins</td></tr>
             <tr><td>Oct 25&ndash;31</td><td>skullsghosts</td></tr>
-            <tr><td>November</td><td>leaves</td></tr>
-            <tr><td>December</td><td>snow</td></tr>
+            <tr><td>Nov 1&ndash;7</td><td>fireworks</td></tr>
+            <tr><td>Nov 8&ndash;30</td><td>leavesAutumn</td></tr>
+            <tr><td>Dec 1&ndash;23</td><td>snow</td></tr>
+            <tr><td>Dec 24&ndash;31</td><td>christmas</td></tr>
         </table>
     </section>
 
@@ -439,7 +446,7 @@ SeasonalOverlaysLibrary.calendar = [
 </main>
 
 <footer>
-    <p>&copy; <span id="copyright-year">2026</span> StuxAPIs &mdash; <a href="changelog" id="version-link">Changelog</a> &middot; <a href="legal">Boring Legal Stuff</a> &middot; <a href="https://services.stuxapis.net">A StuxAPIs Service</a></p>
+    <p>&copy; <span id="copyright-year">2026</span> StuxAPIs &mdash; <a href="changelog" id="version-link">Changelog</a> &middot; <a href="legal">Boring Legal Stuff</a> &middot; <a href="about">About</a> &middot; <a href="https://services.stuxapis.net">A StuxAPIs Service</a></p>
 </footer>
 
 <script src="seasonal-overlays-library.js"></script>

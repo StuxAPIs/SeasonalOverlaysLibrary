@@ -3,6 +3,23 @@
 All notable changes to SeasonalOverlaysLibrary are documented here.
 Versioning follows [Semantic Versioning](https://semver.org/).
 
+## [1.3.0] - 2026-09-23
+
+### Added
+- `about.html`, matching the "About" page every other real StuxAPIs product (SecretGen, Kittens) has, linked from the footer.
+- `sunny` preset (&#9728;&#65039;&#127774;&#127803;): composable like `halloween`/`christmas`, combining `sun`/`sunFace`/`sunflower` via `include`.
+
+### Changed
+- The default seasonal calendar now matches each month's real season wherever `leaves` is used: `leavesSpring` (March, May), `leavesSummer` (July tail, August), `leavesAutumn` (September, most of November), `leavesWinter` (rest of January, rest of February) — instead of always defaulting to autumn regardless of month, or filling gap months with generic `confetti`.
+- `leavesWinter`'s content now includes 🌾 and 🪵 alongside 🍂 — there's no dedicated "bare branch" emoji in Unicode, so this is the closest fit for "mostly bare, a few leaves left".
+- `snow` is now only used Dec 1&ndash;23; Christmas week (Dec 24&ndash;31) resolves to the `christmas` preset instead.
+- August now resolves to the new `sunny` preset instead of `leavesSummer`.
+- The first week of November (Nov 1&ndash;7, Bonfire Night) now resolves to `fireworks`; the rest of the month stays `leavesAutumn`.
+
+### Fixed
+- The footer didn't match the convention used by real StuxAPIs products: missing the "A StuxAPIs Service" link and the "About" link. Fixed to the same single-line footer those products use.
+- The falling particles (`z-index: 9999`) could render on top of the header/footer, obscuring their text/links. Both now sit above the particle layer.
+
 ## [1.2.4] - 2026-09-23
 
 ### Changed

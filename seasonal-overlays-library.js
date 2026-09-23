@@ -66,7 +66,7 @@
  *   snowflakes  - ❄ glyphs, slow fall with gentle rotation
  *   leaves      - 🍁🍂🍃 glyphs (autumn), wide drift and tumbling rotation.
  *                 Takes a `seasons` array to pick/combine spring 🌱🍃, summer
- *                 🌿🍃, autumn 🍁🍂🍃, or winter 🍂 — e.g. `seasons: ['spring']`.
+ *                 🌿🍃, autumn 🍁🍂🍃, or winter 🍂🌾🪵 — e.g. `seasons: ['spring']`.
  *                 leavesSpring / leavesSummer / leavesAutumn / leavesWinter
  *                 are the same preset pre-set to a single season each.
  *   confetti    - small coloured squares, fast fall, heavy rotation
@@ -86,6 +86,8 @@
  *   eastereggs  - 🥚🐣🐰 glyphs, gentle fall with tumbling rotation (Easter, April)
  *   rainbows    - squares in the six classic Pride-flag colours, fast fall
  *                 (Pride month)
+ *   sunny       - ☀️🌞🌻 glyphs, gentle fall with tumbling rotation (August).
+ *                 Combines sun/sunFace/sunflower via `include`, same as halloween/christmas.
  *   nyancat     - a sprite (🐱 by default) flying across the screen trailing
  *                 a rainbow — see the copyright note above
  *   codebug     - easter egg: the actual mojibake text produced during this
@@ -122,9 +124,10 @@
  *                  Always wins over `seasons`/`include` below if you pass it explicitly.
  *   seasons      - leaves only: which season(s) to combine into `content` — any of
  *                  'spring', 'summer', 'autumn', 'winter'. Default depends on the preset.
- *   include      - halloween/christmas only: which element(s) to combine into `content`.
+ *   include      - halloween/christmas/sunny only: which element(s) to combine into `content`.
  *                  halloween: 'pumpkins' | 'skulls' | 'ghosts'. christmas: 'candyCanes' |
- *                  'snowballs' | 'snowflakes' | 'trees' | 'gifts'. Default depends on the preset.
+ *                  'snowballs' | 'snowflakes' | 'trees' | 'gifts'. sunny: 'sun' | 'sunFace' |
+ *                  'sunflower'. Default depends on the preset.
  *   colors       - array of CSS colors for plain-shape particles (and as the
  *                  text colour for non-emoji glyphs, e.g. ❄)
  *   randomColors - true = every particle gets its own random hue instead of
@@ -379,7 +382,7 @@
     spring: ['🌱', '🍃'],
     summer: ['🌿', '🍃'],
     autumn: ['🍁', '🍂', '🍃'],
-    winter: ['🍂']
+    winter: ['🍂', '🌾', '🪵'] // no dedicated "bare branch" emoji exists, so: fallen leaf, dry stalk, wood
   };
   const HALLOWEEN_CONTENT_BY_ELEMENT = {
     pumpkins: ['🎃'],
@@ -392,6 +395,11 @@
     snowflakes: ['❄', '✳', '✴'],
     trees: ['🎄'],
     gifts: ['🎁']
+  };
+  const SUNNY_CONTENT_BY_ELEMENT = {
+    sun: ['☀️'],
+    sunFace: ['🌞'],
+    sunflower: ['🌻']
   };
 
   function resolveGroupedContent(groups, selected, fallback) {
@@ -464,7 +472,7 @@
       rotate: true
     },
     leavesWinter: {
-      // Fewer, smaller, slower — the last few brown leaves still holding on.
+      // Fewer, smaller, slower — the last brown leaves and bare twigs still coming down.
       behavior: 'fall',
       seasons: ['winter'], _contentGroup: 'leaf',
       count: 22,
@@ -568,6 +576,17 @@
       drift: 18,
       rotate: true
     },
+    sunny: {
+      // Pick any combination via include, e.g. include: ['sun'] alone. See
+      // SUNNY_CONTENT_BY_ELEMENT below for each element's glyph.
+      behavior: 'fall',
+      include: ['sun', 'sunFace', 'sunflower'], _contentGroup: 'sunny',
+      count: 35,
+      minSize: 22, maxSize: 36,
+      minDuration: 6, maxDuration: 12,
+      drift: 14,
+      rotate: true
+    },
     nyancat: {
       // See the copyright note in the file header — this is the flying +
       // rainbow-trail mechanic, defaulting to a plain cat emoji. Pass your
@@ -636,21 +655,23 @@
   // that month, so first-match-wins gives them priority.
   const SEASONAL_CALENDAR = [
     { startMonth: 1, startDay: 1, endMonth: 1, endDay: 2, preset: 'fireworks' },      // New Year
-    { startMonth: 1, startDay: 3, endMonth: 1, endDay: 31, preset: 'snow' },          // Rest of January
+    { startMonth: 1, startDay: 3, endMonth: 1, endDay: 31, preset: 'leavesWinter' },  // Rest of January
     { startMonth: 2, startDay: 1, endMonth: 2, endDay: 14, preset: 'hearts' },        // Valentine's season
-    { startMonth: 2, startDay: 15, endMonth: 2, endDay: 28, preset: 'snow' },         // Rest of February
-    { month: 3, preset: 'confetti' },                                                // March
+    { startMonth: 2, startDay: 15, endMonth: 2, endDay: 28, preset: 'leavesWinter' }, // Rest of February
+    { month: 3, preset: 'leavesSpring' },                                            // March
     { month: 4, preset: 'eastereggs' },                                              // Easter (April)
-    { month: 5, preset: 'confetti' },                                                // May
+    { month: 5, preset: 'leavesSpring' },                                            // May
     { month: 6, preset: 'rainbows' },                                                // Pride month
     { startMonth: 7, startDay: 1, endMonth: 7, endDay: 5, preset: 'fireworks' },      // Independence Day window
-    { startMonth: 7, startDay: 6, endMonth: 7, endDay: 31, preset: 'confetti' },      // Rest of July
-    { month: 8, preset: 'confetti' },                                                // August
-    { month: 9, preset: 'leaves' },                                                  // Early autumn
+    { startMonth: 7, startDay: 6, endMonth: 7, endDay: 31, preset: 'leavesSummer' },  // Rest of July
+    { month: 8, preset: 'sunny' },                                                   // August
+    { month: 9, preset: 'leavesAutumn' },                                            // Early autumn
     { startMonth: 10, startDay: 1, endMonth: 10, endDay: 24, preset: 'pumpkins' },    // Halloween run-up
     { startMonth: 10, startDay: 25, endMonth: 10, endDay: 31, preset: 'skullsghosts' }, // Halloween week
-    { month: 11, preset: 'leaves' },                                                 // Autumn
-    { month: 12, preset: 'snow' }                                                    // Christmas / winter
+    { startMonth: 11, startDay: 1, endMonth: 11, endDay: 7, preset: 'fireworks' },    // Bonfire Night week
+    { startMonth: 11, startDay: 8, endMonth: 11, endDay: 30, preset: 'leavesAutumn' }, // Rest of November
+    { startMonth: 12, startDay: 1, endMonth: 12, endDay: 23, preset: 'snow' },        // December, before Christmas week
+    { startMonth: 12, startDay: 24, endMonth: 12, endDay: 31, preset: 'christmas' }   // Christmas week
   ];
 
   // A calendar entry is either a whole month (`{ month: 4, preset: ... }`) or
@@ -750,6 +771,8 @@
           opts.content = resolveGroupedContent(HALLOWEEN_CONTENT_BY_ELEMENT, opts.include, ['pumpkins', 'skulls', 'ghosts']);
         } else if (opts._contentGroup === 'christmas') {
           opts.content = resolveGroupedContent(CHRISTMAS_CONTENT_BY_ELEMENT, opts.include, ['candyCanes', 'snowballs', 'snowflakes']);
+        } else if (opts._contentGroup === 'sunny') {
+          opts.content = resolveGroupedContent(SUNNY_CONTENT_BY_ELEMENT, opts.include, ['sun', 'sunFace', 'sunflower']);
         }
       }
 
