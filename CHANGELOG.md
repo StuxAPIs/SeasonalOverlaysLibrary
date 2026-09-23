@@ -3,6 +3,11 @@
 All notable changes to SeasonalOverlaysLibrary are documented here.
 Versioning follows [Semantic Versioning](https://semver.org/).
 
+## [1.4.1] - 2026-09-23
+
+### Changed
+- Renamed the `nye` preset to `nyeve` (added in v1.4.0, released only minutes earlier — no deprecation needed).
+
 ## [1.4.0] - 2026-09-23
 
 ### Added

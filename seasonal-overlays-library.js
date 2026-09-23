@@ -86,7 +86,7 @@
  *   eastereggs  - 🥚🐣🐰 glyphs, gentle fall with tumbling rotation (Easter, April)
  *   stpatricks  - 🍀 glyphs, gentle fall with tumbling rotation (St. Patrick's Day, March 17)
  *   thanksgiving - 🦃🥧 glyphs, gentle fall (US Thanksgiving week, late November)
- *   nye         - 🎉🥂🍾 glyphs, gentle fall with tumbling rotation (New Year's Eve, Dec 31)
+ *   nyeve       - 🎉🥂🍾 glyphs, gentle fall with tumbling rotation (New Year's Eve, Dec 31)
  *   rainbows    - squares in the six classic Pride-flag colours, fast fall
  *                 (Pride month)
  *   sunny       - ☀️🌞🌻 glyphs, gentle fall with tumbling rotation (August).
@@ -586,7 +586,7 @@
       drift: 14,
       rotate: false
     },
-    nye: {
+    nyeve: {
       behavior: 'fall',
       content: ['🎉', '🥂', '🍾'], // 🎉 🥂 🍾
       count: 45,
@@ -706,7 +706,7 @@
     { startMonth: 11, startDay: 29, endMonth: 11, endDay: 30, preset: 'leavesAutumn' }, // Rest of November
     { startMonth: 12, startDay: 1, endMonth: 12, endDay: 23, preset: 'snow' },        // December, before Christmas week
     { startMonth: 12, startDay: 24, endMonth: 12, endDay: 30, preset: 'christmas' },  // Christmas week
-    { startMonth: 12, startDay: 31, endMonth: 12, endDay: 31, preset: 'nye' }         // New Year's Eve
+    { startMonth: 12, startDay: 31, endMonth: 12, endDay: 31, preset: 'nyeve' }       // New Year's Eve
   ];
 
   // A calendar entry is either a whole month (`{ month: 4, preset: ... }`) or
