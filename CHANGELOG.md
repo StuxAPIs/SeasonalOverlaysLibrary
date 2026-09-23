@@ -3,6 +3,11 @@
 All notable changes to SeasonalOverlaysLibrary are documented here.
 Versioning follows [Semantic Versioning](https://semver.org/).
 
+## [1.3.1] - 2026-09-23
+
+### Fixed
+- GitHub Pages was silently failing to auto-deploy after some pushes (no error recorded anywhere) — it used the legacy branch-deploy build system, which relies on an internal push hook with no observability. Switched to GitHub Actions-based Pages deployment (`.github/workflows/pages.yml`), making every deploy an ordinary, visible CI run instead.
+
 ## [1.3.0] - 2026-09-23
 
 ### Added
