@@ -3,6 +3,11 @@
 All notable changes to SeasonalOverlaysLibrary are documented here.
 Versioning follows [Semantic Versioning](https://semver.org/).
 
+## [1.4.0] - 2026-09-23
+
+### Added
+- Three new presets filling the remaining gaps in the default seasonal calendar: `stpatricks` (🍀, St. Patrick's Day, March 17), `thanksgiving` (🦃🥧, US Thanksgiving week, Nov 22&ndash;28 &mdash; a fixed approximation since the real 4th Thursday moves year to year), and `nye` (🎉🥂🍾, New Year's Eve, December 31, distinct from the New Year's Day `fireworks` window).
+
 ## [1.3.1] - 2026-09-23
 
 ### Fixed

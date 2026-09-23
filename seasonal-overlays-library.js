@@ -84,6 +84,9 @@
  *                 🎁 are also available but not included by default
  *   hearts      - heart emoji, gentle fall (Valentine's)
  *   eastereggs  - 🥚🐣🐰 glyphs, gentle fall with tumbling rotation (Easter, April)
+ *   stpatricks  - 🍀 glyphs, gentle fall with tumbling rotation (St. Patrick's Day, March 17)
+ *   thanksgiving - 🦃🥧 glyphs, gentle fall (US Thanksgiving week, late November)
+ *   nye         - 🎉🥂🍾 glyphs, gentle fall with tumbling rotation (New Year's Eve, Dec 31)
  *   rainbows    - squares in the six classic Pride-flag colours, fast fall
  *                 (Pride month)
  *   sunny       - ☀️🌞🌻 glyphs, gentle fall with tumbling rotation (August).
@@ -565,6 +568,33 @@
       drift: 14,
       rotate: true
     },
+    stpatricks: {
+      behavior: 'fall',
+      content: ['🍀'], // 🍀
+      count: 40,
+      minSize: 20, maxSize: 34,
+      minDuration: 6, maxDuration: 11,
+      drift: 12,
+      rotate: true
+    },
+    thanksgiving: {
+      behavior: 'fall',
+      content: ['🦃', '🥧'], // 🦃 🥧
+      count: 32,
+      minSize: 22, maxSize: 36,
+      minDuration: 6, maxDuration: 12,
+      drift: 14,
+      rotate: false
+    },
+    nye: {
+      behavior: 'fall',
+      content: ['🎉', '🥂', '🍾'], // 🎉 🥂 🍾
+      count: 45,
+      minSize: 20, maxSize: 32,
+      minDuration: 5, maxDuration: 10,
+      drift: 16,
+      rotate: true
+    },
     rainbows: {
       // Classic six-stripe Pride flag palette.
       behavior: 'fall',
@@ -658,7 +688,9 @@
     { startMonth: 1, startDay: 3, endMonth: 1, endDay: 31, preset: 'leavesWinter' },  // Rest of January
     { startMonth: 2, startDay: 1, endMonth: 2, endDay: 14, preset: 'hearts' },        // Valentine's season
     { startMonth: 2, startDay: 15, endMonth: 2, endDay: 28, preset: 'leavesWinter' }, // Rest of February
-    { month: 3, preset: 'leavesSpring' },                                            // March
+    { startMonth: 3, startDay: 1, endMonth: 3, endDay: 16, preset: 'leavesSpring' },   // March, before St. Patrick's Day
+    { startMonth: 3, startDay: 17, endMonth: 3, endDay: 17, preset: 'stpatricks' },   // St. Patrick's Day
+    { startMonth: 3, startDay: 18, endMonth: 3, endDay: 31, preset: 'leavesSpring' },  // Rest of March
     { month: 4, preset: 'eastereggs' },                                              // Easter (April)
     { month: 5, preset: 'leavesSpring' },                                            // May
     { month: 6, preset: 'rainbows' },                                                // Pride month
@@ -669,9 +701,12 @@
     { startMonth: 10, startDay: 1, endMonth: 10, endDay: 24, preset: 'pumpkins' },    // Halloween run-up
     { startMonth: 10, startDay: 25, endMonth: 10, endDay: 31, preset: 'skullsghosts' }, // Halloween week
     { startMonth: 11, startDay: 1, endMonth: 11, endDay: 7, preset: 'fireworks' },    // Bonfire Night week
-    { startMonth: 11, startDay: 8, endMonth: 11, endDay: 30, preset: 'leavesAutumn' }, // Rest of November
+    { startMonth: 11, startDay: 8, endMonth: 11, endDay: 21, preset: 'leavesAutumn' }, // November, before Thanksgiving
+    { startMonth: 11, startDay: 22, endMonth: 11, endDay: 28, preset: 'thanksgiving' }, // Thanksgiving week (approximate — the 4th Thursday moves, this is a fixed best-fit range)
+    { startMonth: 11, startDay: 29, endMonth: 11, endDay: 30, preset: 'leavesAutumn' }, // Rest of November
     { startMonth: 12, startDay: 1, endMonth: 12, endDay: 23, preset: 'snow' },        // December, before Christmas week
-    { startMonth: 12, startDay: 24, endMonth: 12, endDay: 31, preset: 'christmas' }   // Christmas week
+    { startMonth: 12, startDay: 24, endMonth: 12, endDay: 30, preset: 'christmas' },  // Christmas week
+    { startMonth: 12, startDay: 31, endMonth: 12, endDay: 31, preset: 'nye' }         // New Year's Eve
   ];
 
   // A calendar entry is either a whole month (`{ month: 4, preset: ... }`) or
