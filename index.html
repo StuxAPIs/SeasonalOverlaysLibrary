@@ -439,7 +439,7 @@ SeasonalOverlaysLibrary.calendar = [
 </main>
 
 <footer>
-    <p>&copy; 2026 StuxAPIs &mdash; <a href="changelog" id="version-link">Changelog</a> &middot; <a href="legal">Boring Legal Stuff</a> &middot; <a href="https://services.stuxapis.net">A StuxAPIs Service</a></p>
+    <p>&copy; <span id="copyright-year">2026</span> StuxAPIs &mdash; <a href="changelog" id="version-link">Changelog</a> &middot; <a href="legal">Boring Legal Stuff</a> &middot; <a href="https://services.stuxapis.net">A StuxAPIs Service</a></p>
 </footer>
 
 <script src="seasonal-overlays-library.js"></script>
@@ -483,6 +483,14 @@ SeasonalOverlaysLibrary.calendar = [
             document.getElementById('version-link').textContent = 'v' + v.trim();
         })
         .catch(function () {});
+</script>
+<script>
+    (function () {
+        var fromYear = 2026;
+        var currentYear = new Date().getFullYear();
+        var text = currentYear === fromYear ? String(fromYear) : fromYear + '-' + currentYear;
+        document.getElementById('copyright-year').textContent = text;
+    })();
 </script>
 <script>
     (function () {

@@ -3,6 +3,11 @@
 All notable changes to SeasonalOverlaysLibrary are documented here.
 Versioning follows [Semantic Versioning](https://semver.org/).
 
+## [1.2.4] - 2026-09-23
+
+### Changed
+- Footer copyright year is now computed client-side instead of hardcoded: shows just `2026` (this library's real creation year) until the current year moves past it, then a `2026-<current year>` range. Matches the same fix applied to SecretGen and Kittens.
+
 ## [1.2.3] - 2026-09-22
 
 ### Fixed
