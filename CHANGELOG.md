@@ -3,6 +3,11 @@
 All notable changes to SeasonalOverlaysLibrary are documented here.
 Versioning follows [Semantic Versioning](https://semver.org/).
 
+## [1.4.2] - 2026-09-23
+
+### Fixed
+- The footer's version/changelog link still turned accent-purple once visited, even after the earlier fix in v1.2.3 — `a:visited` carries a pseudo-class, giving it higher CSS specificity than the two-element `footer a` selector, so it kept beating it. Every footer across the site (`index.html`, `about.html`, `legal.html`, `changelog.html`, and all six `legal/*.html` pages) now also styles `footer a:visited` explicitly, so the version number and every other footer link stay muted regardless of visited state.
+
 ## [1.4.1] - 2026-09-23
 
 ### Changed
