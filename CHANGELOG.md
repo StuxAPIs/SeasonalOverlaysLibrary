@@ -3,6 +3,13 @@
 All notable changes to SeasonalOverlaysLibrary are documented here.
 Versioning follows [Semantic Versioning](https://semver.org/).
 
+## [1.4.3] - 2026-09-26
+
+### Changed
+- Changelog page badges now use the fixed shared palette — Added green, Changed blue, Fixed orange, Removed red, Security purple, Deprecated grey — as tinted pills, with darker variants in light mode
+- `###` sections within each release are sorted into that same fixed order (Added, Changed, Fixed, Removed, Security, Deprecated) at render time, whatever order `CHANGELOG.md` lists them in; unknown types go last
+- CHANGELOG sections reordered to Added, Changed, Fixed, Removed, Security, Deprecated
+
 ## [1.4.2] - 2026-09-23
 
 ### Fixed
@@ -134,16 +141,16 @@ Versioning follows [Semantic Versioning](https://semver.org/).
   Pride month, Halloween, Autumn, and Christmas, and adds Easter (all of April)
   mapped to `eastereggs`.
 
+### Changed
+- The `fireworks` preset is noticeably bigger and busier: 48 particles per
+  burst (was 32), 3 simultaneous burst origins per tick, and ticks every
+  450ms instead of 900ms.
+
 ### Fixed
 - The `snowflakes` preset's ❅/❆ glyphs (U+2745/U+2746) aren't reliably
   supported by common fonts and could render as tofu/garbled boxes depending
   on the host's font stack. Replaced with ❄/✳/✴ (U+2744/U+2733/U+2734), which
   are broadly supported.
-
-### Changed
-- The `fireworks` preset is noticeably bigger and busier: 48 particles per
-  burst (was 32), 3 simultaneous burst origins per tick, and ticks every
-  450ms instead of 900ms.
 
 ## [1.0.0] - 2026-09-22
 
