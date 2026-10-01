@@ -102,7 +102,7 @@
 </main>
 
 <footer>
-    <p>StuxAPIs is operated by Stux Group Ltd. &copy; 2026 Stux.Group. All rights reserved.</p>
+    <p>StuxAPIs is operated by Stux Group Ltd. &copy; <span data-copyright-years data-start="2026">2026</span> Stux.Group. All rights reserved.</p>
 </footer>
 
 <script>
@@ -230,5 +230,6 @@
             });
     })();
 </script>
+<script>(function(){var y=new Date().getFullYear();document.querySelectorAll('[data-copyright-years]').forEach(function(e){var s=parseInt(e.getAttribute('data-start'),10);e.textContent=s>=y?String(y):s+'–'+y;});})();</script>
 </body>
 </html>

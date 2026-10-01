@@ -466,7 +466,7 @@ SeasonalOverlaysLibrary.calendar = [
 </main>
 
 <footer>
-    <p>&copy; <span id="copyright-year">2026</span> StuxAPIs &mdash; <a href="changelog" id="version-link">Changelog</a> &middot; <a href="legal">Boring Legal Stuff</a> &middot; <a href="about">About</a> &middot; <a href="https://services.stuxapis.net">A StuxAPIs Service</a></p>
+    <p>&copy; <span data-copyright-years data-start="2026">2026</span> StuxAPIs &mdash; <a href="changelog" id="version-link">Changelog</a> &middot; <a href="legal">Boring Legal Stuff</a> &middot; <a href="about">About</a> &middot; <a href="https://services.stuxapis.net">A StuxAPIs Service</a></p>
 </footer>
 
 <script src="seasonal-overlays-library.js"></script>
@@ -513,14 +513,6 @@ SeasonalOverlaysLibrary.calendar = [
 </script>
 <script>
     (function () {
-        var fromYear = 2026;
-        var currentYear = new Date().getFullYear();
-        var text = currentYear === fromYear ? String(fromYear) : fromYear + '-' + currentYear;
-        document.getElementById('copyright-year').textContent = text;
-    })();
-</script>
-<script>
-    (function () {
         var infiniteToggle = document.getElementById('infinite-toggle');
         var demoButtons = document.querySelectorAll('.demo-btn');
         function syncInfiniteAttr() {
@@ -554,5 +546,6 @@ SeasonalOverlaysLibrary.calendar = [
         });
     })();
 </script>
+<script>(function(){var y=new Date().getFullYear();document.querySelectorAll('[data-copyright-years]').forEach(function(e){var s=parseInt(e.getAttribute('data-start'),10);e.textContent=s>=y?String(y):s+'–'+y;});})();</script>
 </body>
 </html>

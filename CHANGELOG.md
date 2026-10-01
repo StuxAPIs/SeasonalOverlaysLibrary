@@ -3,6 +3,12 @@
 All notable changes to SeasonalOverlaysLibrary are documented here.
 Versioning follows [Semantic Versioning](https://semver.org/).
 
+## [1.4.5] - 2026-10-01
+
+### Changed
+
+- The footer's copyright year is worked out automatically: the start year alone in the first year, then START–CURRENT
+
 ## [1.4.4] - 2026-10-01
 
 ### Changed
