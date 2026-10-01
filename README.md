@@ -82,7 +82,7 @@ MIT — see [LICENSE](LICENSE).
 
 ## Copyright
 
-(C) 2026 Stux Group Ltd. All rights reserved.
+(C) 2026 Stux.Group. All rights reserved.
 
 ---
 

@@ -3,6 +3,12 @@
 All notable changes to SeasonalOverlaysLibrary are documented here.
 Versioning follows [Semantic Versioning](https://semver.org/).
 
+## [1.4.4] - 2026-10-01
+
+### Changed
+
+- The copyright line reads Stux.Group instead of Stux Group Ltd
+
 ## [1.4.3] - 2026-09-26
 
 ### Changed
