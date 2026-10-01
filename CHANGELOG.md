@@ -3,6 +3,15 @@
 All notable changes to SeasonalOverlaysLibrary are documented here.
 Versioning follows [Semantic Versioning](https://semver.org/).
 
+## [1.4.6] - 2026-10-01
+
+### Changed
+
+- The library has its own icon: a snowflake on stacked overlay layers in the site's purple (`#BF7FF9` to `#7a1fd6`), served from `assets/icon.svg` and `assets/icon.png`. It's the favicon, the header icon, the social preview image (now a square `summary` card) and the README logo, replacing the generic StuxAPIs icon
+- The Privacy Policy and Opt-Out pages no longer mention images loaded from `global.media.stuxapis.net`, since every file is now served from this domain
+- A SeasonalOverlaysLibrary logo, built like the other StuxAPIs services' logos (the icon tile followed by the name in bold), in light and dark versions (`assets/logo.svg`, `assets/logo-dark.svg`). The header shows it on every page, switching with the theme, instead of the icon with the "StuxAPIs" label; on phones it shows just the icon. The README and CONTRIBUTING headers use it too
+- The main page has "A StuxAPIs Service", with the StuxAPIs icon, above the heading, linking to services.stux.group
+
 ## [1.4.5] - 2026-10-01
 
 ### Changed

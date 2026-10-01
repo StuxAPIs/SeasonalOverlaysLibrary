@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" href="https://global.media.stuxapis.net/icon.png">
+    <link rel="icon" type="image/svg+xml" href="/assets/icon.svg">
+    <link rel="icon" type="image/png" href="/assets/icon.png">
+    <link rel="apple-touch-icon" href="/assets/icon.png">
     <link rel="stylesheet" href="assets/fonts/fonts.css">
     <meta name="description" content="Everything that's changed on SeasonalOverlaysLibrary, release by release.">
     <title>Changelog - StuxAPIs</title>
@@ -43,6 +45,22 @@
 
         .site-header { display: flex; align-items: center; justify-content: space-between; padding: 18px 6%; }
         .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.1rem; color: var(--text-1); }
+        .brand-logo { height: 30px; width: auto; display: block; }
+        .brand-logo--light, .brand-icon { display: none; }
+        :root.theme-light .brand-logo--light { display: block; }
+        :root.theme-light .brand-logo--dark { display: none; }
+        @media (prefers-color-scheme: light) {
+            :root:not(.theme-dark) .brand-logo--light { display: block; }
+            :root:not(.theme-dark) .brand-logo--dark { display: none; }
+        }
+        @media (max-width: 520px) {
+            .brand .brand-logo { display: none !important; }
+            .brand .brand-icon { display: block; width: 32px; height: 32px; }
+        }
+        .service-eyebrow { display: flex; justify-content: center; align-items: center; gap: 8px; margin: 0 0 14px; font-size: .85rem; font-weight: 600; letter-spacing: .02em; color: var(--text-2, inherit); opacity: .85; }
+        .service-eyebrow img { width: 22px; height: 22px; border-radius: 6px; }
+        .service-eyebrow a { color: inherit; text-decoration: none; }
+        .service-eyebrow a:hover, .service-eyebrow a:focus-visible { text-decoration: underline; }
         .brand img { height: 32px; width: auto; }
         #theme-toggle {
             background: var(--accent-bg); border: 1px solid var(--accent-border); border-radius: 50%;
@@ -87,8 +105,7 @@
 <body>
 
 <header class="site-header">
-    <a class="brand" href="./"><img src="https://global.media.stuxapis.net/icon.png" alt="StuxAPIs">
-        <span>StuxAPIs</span></a>
+    <a class="brand" href="./"><img class="brand-logo brand-logo--dark" src="/assets/logo-dark.svg" alt="SeasonalOverlaysLibrary" height="30"><img class="brand-logo brand-logo--light" src="/assets/logo.svg" alt="SeasonalOverlaysLibrary" height="30"><img class="brand-icon" src="/assets/icon.svg" alt="SeasonalOverlaysLibrary" width="32" height="32"></a>
     <button type="button" id="theme-toggle" title="Toggle light/dark mode" aria-label="Toggle light/dark mode">&#9788;</button>
 </header>
 

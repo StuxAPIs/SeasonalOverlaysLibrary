@@ -1,5 +1,8 @@
 <p align="center">
-  <img src="https://global.media.stuxapis.net/logo.png" height="80" alt="StuxAPIs Logo">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.svg">
+    <img src="assets/logo.svg" height="80" alt="SeasonalOverlaysLibrary">
+  </picture>
 </p>
 
 # Contributing to SeasonalOverlaysLibrary

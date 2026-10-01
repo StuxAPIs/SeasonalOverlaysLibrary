@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" href="https://global.media.stuxapis.net/icon.png">
+    <link rel="icon" type="image/svg+xml" href="/assets/icon.svg">
+    <link rel="icon" type="image/png" href="/assets/icon.png">
+    <link rel="apple-touch-icon" href="/assets/icon.png">
     <meta name="description" content="Privacy policy for SeasonalOverlaysLibrary.">
     <title>Privacy Policy | Legal - StuxAPIs</title>
     <link rel="stylesheet" href="../assets/fonts/fonts.css">
@@ -39,6 +41,22 @@
 
         .site-header { display: flex; align-items: center; justify-content: space-between; padding: 18px 6%; }
         .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.1rem; color: var(--text-1); }
+        .brand-logo { height: 30px; width: auto; display: block; }
+        .brand-logo--light, .brand-icon { display: none; }
+        :root.theme-light .brand-logo--light { display: block; }
+        :root.theme-light .brand-logo--dark { display: none; }
+        @media (prefers-color-scheme: light) {
+            :root:not(.theme-dark) .brand-logo--light { display: block; }
+            :root:not(.theme-dark) .brand-logo--dark { display: none; }
+        }
+        @media (max-width: 520px) {
+            .brand .brand-logo { display: none !important; }
+            .brand .brand-icon { display: block; width: 32px; height: 32px; }
+        }
+        .service-eyebrow { display: flex; justify-content: center; align-items: center; gap: 8px; margin: 0 0 14px; font-size: .85rem; font-weight: 600; letter-spacing: .02em; color: var(--text-2, inherit); opacity: .85; }
+        .service-eyebrow img { width: 22px; height: 22px; border-radius: 6px; }
+        .service-eyebrow a { color: inherit; text-decoration: none; }
+        .service-eyebrow a:hover, .service-eyebrow a:focus-visible { text-decoration: underline; }
         .brand img { height: 32px; width: auto; }
         #theme-toggle {
             background: var(--accent-bg); border: 1px solid var(--accent-border); border-radius: 50%;
@@ -65,8 +83,7 @@
 <body>
 
 <header class="site-header">
-    <a class="brand" href="../"><img src="https://global.media.stuxapis.net/icon.png" alt="StuxAPIs">
-        <span>StuxAPIs</span></a>
+    <a class="brand" href="../"><img class="brand-logo brand-logo--dark" src="/assets/logo-dark.svg" alt="SeasonalOverlaysLibrary" height="30"><img class="brand-logo brand-logo--light" src="/assets/logo.svg" alt="SeasonalOverlaysLibrary" height="30"><img class="brand-icon" src="/assets/icon.svg" alt="SeasonalOverlaysLibrary" width="32" height="32"></a>
     <button type="button" id="theme-toggle" title="Toggle light/dark mode" aria-label="Toggle light/dark mode">&#9788;</button>
 </header>
 
@@ -80,7 +97,7 @@
 
     <h2>This website</h2>
     <p>There is no email signup, newsletter, contact form, or any other way to submit information on this page beyond the "Contact Us for Support" button, which just opens your own email client &mdash; nothing is sent to us through the page itself.</p>
-    <p>The Fredoka font is served from this same domain, not a third-party CDN. The only resource loaded from outside this domain is the logo and icon images, from <code>global.media.stuxapis.net</code> &mdash; infrastructure operated by the same Stux Group Ltd chain that runs this page, not an unrelated third party.</p>
+    <p>The Fredoka font is served from this same domain, not a third-party CDN. The icon and every other file this page needs are served from this same domain too, so nothing is loaded from outside it.</p>
 
     <h2>localStorage</h2>
     <p>The only thing this page stores in your browser is a single value, <code>stuxapis-theme</code>, remembering whether you last chose light or dark mode. It never leaves your device, isn't sent to any server, and can be cleared any time via your browser's site data settings.</p>
