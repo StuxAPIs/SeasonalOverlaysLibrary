@@ -5,6 +5,14 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 Since v26.10.23 this project uses [Date Versioning](https://datevers.ing) (`YY.MM.DD`, the UTC release date, with `-1`, `-2`… for later releases the same day); earlier releases used Semantic Versioning.
 
+## v26.10.23-1
+
+### Added
+
+- A custom Discord link preview on every page except the 404 page: a card with the library's name, a short description and a few link buttons, in the site's purple. The Open Graph tags stay as the fallback
+- A full favicon set: `favicon.ico` (16, 32 and 48px), `apple-touch-icon.png`, and `site.webmanifest` with 192px, 512px and maskable icons. Every page, the 404 page included, links them
+- `tests/pages.js`, which checks every page's Discord embed (valid JSON, under 3,000 bytes, allowed components only, no stray escaping) and favicon tags, plus the icon files and the manifest. Run it with `node tests/pages.js`
+
 ## v26.10.23
 
 ### Added
