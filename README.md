@@ -79,6 +79,10 @@ No build step or dependencies. Clone the repo and run `./dev-server.sh
 [port]` (or `dev-server.bat [port]` on Windows), then open
 `http://127.0.0.1:8000`.
 
+## Versioning
+
+This project uses [Date Versioning](https://datevers.ing): each release is numbered by its UTC release date as `YY.MM.DD` (for example `26.10.23`), with `-1`, `-2`… for later releases the same day. See [CHANGELOG.md](CHANGELOG.md) for what changed in each release.
+
 ## License
 
 MIT — see [LICENSE](LICENSE).

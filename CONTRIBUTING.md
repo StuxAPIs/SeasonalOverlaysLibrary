@@ -31,11 +31,14 @@ a local static server pointed at the directory. Then open
 - New particle presets go in the `PRESETS` object in the library file, and should be documented in both the header comment block and the demo page.
 - Match the existing code style: no comments explaining *what* the code does, only *why* when something is genuinely non-obvious.
 
-## Versioning and changelog
+## Versioning
 
-- The version lives in `VERSION.md` (a bare version string) — bump it on every release, following [Semantic Versioning](https://semver.org/)
-- Every release gets a `CHANGELOG.md` entry using `### Added` / `### Changed` / `### Fixed` subsections
-- `commit.sh` (bash) and `commit.bat` (Windows) read `VERSION.md` to commit and tag a release — no need to edit them per release
+This project uses [Date Versioning](https://datevers.ing). To release:
+
+1. Add a `## vYY.MM.DD` entry at the top of `CHANGELOG.md`, with its sections in this order: Added, Changed, Fixed, Removed, Security, Deprecated.
+2. Set `VERSION.md` to the same bare version (no `v`): today's **UTC** date as `YY.MM.DD`, or `YY.MM.DD-1`, `-2`… for later releases the same UTC day. Never a future date. Use UTC, not local time: just after midnight in the UK it is still the previous day in UTC.
+3. Run `bash tests/version.sh`.
+4. Run `./commit.sh` (or `commit.bat` on Windows). It checks the version, commits and tags `vYY.MM.DD`, and never pushes.
 
 ## Before committing
 
