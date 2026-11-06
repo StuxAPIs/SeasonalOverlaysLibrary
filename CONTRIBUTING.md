@@ -31,6 +31,12 @@ a local static server pointed at the directory. Then open
 - New particle presets go in the `PRESETS` object in the library file, and should be documented in both the header comment block and the demo page.
 - Match the existing code style: no comments explaining *what* the code does, only *why* when something is genuinely non-obvious.
 
+## Branches
+
+- Work on `test`, or on a branch off it. Never push to `main`
+- Changes reach `main` only through a pull request from `test` into `main`, which needs CI to pass and is reviewed and merged by Leo
+- Release commits and tags are made on `test` (`git push origin test --tags`) and take effect when the pull request is merged. Merging deploys the site to GitHub Pages.
+
 ## Versioning
 
 This project uses [Date Versioning](https://datevers.ing). To release:
