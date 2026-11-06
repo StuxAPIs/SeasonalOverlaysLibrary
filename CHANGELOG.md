@@ -1,9 +1,14 @@
 # Changelog
 
 All notable changes to SeasonalOverlaysLibrary are documented here.
-Versioning follows [Semantic Versioning](https://semver.org/).
 
 Since v26.10.23 this project uses [Date Versioning](https://datevers.ing) (`YY.MM.DD`, the UTC release date, with `-1`, `-2`… for later releases the same day); earlier releases used Semantic Versioning.
+
+## v26.11.06
+
+### Fixed
+
+- The changelog intro no longer also says the project follows Semantic Versioning
 
 ## v26.10.23-1
 
