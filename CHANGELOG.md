@@ -4,6 +4,17 @@ All notable changes to SeasonalOverlaysLibrary are documented here.
 
 Since v26.10.23 this project uses [Date Versioning](https://datevers.ing) (`YY.MM.DD`, the UTC release date, with `-1`, `-2`… for later releases the same day); earlier releases used Semantic Versioning.
 
+## v26.11.06-1
+
+### Added
+
+- `.github/workflows/ci.yml`, running `node tests/pages.js`, `bash tests/version.sh` on pushes to `main` and `test` and on every pull request
+
+### Changed
+
+- `commit.sh` and `commit.bat` end by saying to push `test` and open a pull request into `main`
+- README (Versioning) and CONTRIBUTING (a new Branches section) describe the `test` branch flow: work and releases happen on `test`, and reach `main` only through a reviewed pull request that needs CI to pass
+
 ## v26.11.06
 
 ### Fixed
