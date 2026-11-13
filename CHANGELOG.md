@@ -4,6 +4,12 @@ All notable changes to SeasonalOverlaysLibrary are documented here.
 
 Since v26.10.23 this project uses [Date Versioning](https://datevers.ing) (`YY.MM.DD`, the UTC release date, with `-1`, `-2`… for later releases the same day); earlier releases used Semantic Versioning.
 
+## v26.11.13
+
+### Changed
+
+- Stux Group Ltd's registered office is now 124 City Road, London, EC1V 2NX, England, United Kingdom (it was 82a James Carter Road, Mildenhall), on the Imprint page. The company number and registration are unchanged
+
 ## v26.11.06-1
 
 ### Added
