@@ -4,6 +4,20 @@ All notable changes to SeasonalOverlaysLibrary are documented here.
 
 Since v26.10.23 this project uses [Date Versioning](https://datevers.ing) (`YY.MM.DD`, the UTC release date, with `-1`, `-2`… for later releases the same day); earlier releases used Semantic Versioning.
 
+## v26.11.15
+
+### Added
+
+- `--lan` for `dev-server.sh` / `dev-server.bat`: the dev server listens on all network interfaces instead of `127.0.0.1` only, so a phone or tablet on the same network can open it, and prints the addresses to open (usually the `192.168.x.x` one). Without it, it still listens on `127.0.0.1` only. The README and CONTRIBUTING explain it
+
+### Changed
+
+- Releases now go live in two steps, each through a pull request: `test` into `staging`, then `staging` into `main`. `staging` is a new branch made from `main`, and nothing is pushed to `staging` or `main` directly. `commit.sh` / `commit.bat` refuse to run on `staging` or `main`, and print the push command and both `gh pr create` commands. CI also runs on `staging`. CONTRIBUTING's "Branches and going live" section and the README describe it
+
+### Fixed
+
+- The dev-server scripts' header comment named Soonpage instead of this project
+
 ## v26.11.13
 
 ### Changed
